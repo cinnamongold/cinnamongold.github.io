@@ -25,6 +25,16 @@
     <div id="output"></div>
     <div id="colorDiv" class="color-display"></div>
 
+    <hr style="margin: 40px 0;">
+
+    <h2>Multiple of 21 Range Calculator</h2>
+    <label>
+        Enter Number:
+        <input type="number" id="rangeInput" min="1" placeholder="1">
+    </label>
+    <button onclick="calculateRange()">Calculate Range</button>
+    <div id="rangeOutput"></div>
+
     <script>
         function convertToHex() {
             const input = document.getElementById('decimalInput').value;
@@ -38,6 +48,18 @@
             let color = "#" + hex;
             document.getElementById('output').textContent = "Hex color: " + color;
             document.getElementById('colorDiv').style.background = color;
+        }
+
+        function calculateRange() {
+            const input = document.getElementById('rangeInput').value;
+            let num = Number(input);
+            if (isNaN(num) || num < 1) {
+                document.getElementById('rangeOutput').textContent = "Enter a valid number (1 or greater)";
+                return;
+            }
+            let start = (num - 1) * 21 + 1;
+            let end = num * 21;
+            document.getElementById('rangeOutput').textContent = `Range: ${start}–${end}`;
         }
     </script>
 </body>
