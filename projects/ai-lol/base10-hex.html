@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Decimal to Hex Color Converter</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        input { width: 100px; }
+        .color-display {
+            margin-top: 20px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h2>Decimal to Hex Color Converter</h2>
+    <label>
+        Enter Base 10 Number:
+        <input type="number" id="decimalInput" min="0" max="16777215" placeholder="0">
+    </label>
+    <button onclick="convertToHex()">Convert</button>
+    <div id="output"></div>
+    <div id="colorDiv" class="color-display"></div>
+
+    <script>
+        function convertToHex() {
+            const input = document.getElementById('decimalInput').value;
+            let num = Number(input);
+            if (isNaN(num) || num < 0 || num > 16777215) {
+                document.getElementById('output').textContent = "Enter a valid number (0–16777215)";
+                document.getElementById('colorDiv').style.background = "#fff";
+                return;
+            }
+            let hex = num.toString(16).padStart(6, '0');
+            let color = "#" + hex;
+            document.getElementById('output').textContent = "Hex color: " + color;
+            document.getElementById('colorDiv').style.background = color;
+        }
+    </script>
+</body>
+</html>
