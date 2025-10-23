@@ -16,35 +16,50 @@
 </head>
 
 <body>
-    <!--Main section-->
-    <section>
-        <h1>welcome to my website! <img src="media/images/gif/hi.gif" width="50px"></h1>
+    <main>
+        <!--Main section-->
+        <section id="main-section">
+            <h1>welcome to my website! <img src="media/images/gif/hi.gif" width="50px"></h1>
+            <hr>
+            <h2><a href="projects/">project directory</a></h2>
+            <p><a href="about.html">what is this??</a></p>
+        </section>
+
         <hr>
-        <h2><a href="projects/">project directory</a></h2>
-        <p><a href="about.html">what is this??</a></p>
-    </section>
 
-    <hr>
+        <!--Media section-->
+        <section id="media-section">
+            <h2>media dump!</h2>
+            <figure>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="red">
+                    <path
+                        d="M12 21s-6-4.35-9.33-8.22C-.5 7.39 3.24 1 8.4 4.28 10.08 5.32 12 7.5 12 7.5s1.92-2.18 3.6-3.22C20.76 1 24.5 7.39 21.33 12.78 18 16.65 12 21 12 21z">
+                    </path>
+                </svg>
+                <figcaption>SVG heart made in freecodecamp</figcaption>
+            </figure>
+            <hr id="small-hr">
 
-    <!--Media section-->
-    <section>
-        <h2>media dump!</h2>
-        <figure>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="red">
-                <path d="M12 21s-6-4.35-9.33-8.22C-.5 7.39 3.24 1 8.4 4.28 10.08 5.32 12 7.5 12 7.5s1.92-2.18 3.6-3.22C20.76 1 24.5 7.39 21.33 12.78 18 16.65 12 21 12 21z"></path>
-            </svg>
-            <figcaption>SVG heart made in freecodecamp</figcaption>
-        </figure>
-        <hr style="width: 50%;margin-left: 0%;">
+            <figure>
+                <video src="media/video/stupidAssAIVideo.mp4" controls autoplay loop width="500">
+                    Your browser does not support the video tag.
+                </video>
+                <figcaption>an ai generated video - <a href="misc/ai-video-iframe/" target="_blank">watch in new tab</a>
+                </figcaption>
+            </figure>
 
-        <figure>
-            <video src="media/video/stupidAssAIVideo.mp4" controls autoplay loop width="500">
-                Your browser does not support the video tag.
-            </video>
-            <figcaption>an ai generated video - <a href="misc/ai-video-iframe/" target="_blank">watch in new tab</a></figcaption>
-        </figure>
+        </section>
+    </main>
 
-    </section>
+    <hr id="small-hr">
+
+    <!--Footer section-->
+    <footer>
+        <section id="contact-section">
+            <h2>contact me</h2>
+            <p>email <i>nicoissofart@gmail.com</i> · <a href="https://discord.gg/hBRK6xt9pj">discord server</a></p>
+        </section>
+    </footer>
 </body>
 
 </html>
