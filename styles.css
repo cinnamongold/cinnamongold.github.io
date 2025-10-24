@@ -4,6 +4,12 @@
 
 */
 
+.tiny-header {
+    font-size: 0.5em;
+    vertical-align: super;
+    color: gray;
+}
+
 #small-hr {
     width: 50%;
     margin-left: 0%;
