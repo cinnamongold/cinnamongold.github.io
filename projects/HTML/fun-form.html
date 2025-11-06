@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Survey Form</title>
+</head>
+
+<body>
+    <h1 id="title">Super important form</h1>
+    <p id="description">An extremely important form to work on uh something</p>
+
+
+    <form id="survey-form" method="POST" action="https://cinnamongold.github.io">
+
+        <fieldset id="info">
+            <legend>Personal Info</legend>
+            <label for="name" id="name-label">Name (required):</label>
+            <input required id="name" type="text" name="name" placeholder="John Doe">
+
+            <label for="email" id="email-label">Email (required):</label>
+            <input required id="email" type="email" name="email" placeholder="email@example.com">
+
+            <label for="age" id="number-label">How old are you?:</label>
+            <input required id="number" type="number" name="age" placeholder="25" min="1" max="999">
+        </fieldset>
+
+        <fieldset id="are-you-happy">
+            <legend>Are you happy?</legend>
+
+            <select name="happiness" id="dropdown">
+                <option selected value="3">Yes, I'm super super happy!!</option>
+                <option value="2">Yeah.. i guess</option>
+                <option value="1">im ok</option>
+                <option value="0">no, my life sucks and i'm depressed</option>
+            </select>
+
+        </fieldset>
+
+        <fieldset id="solve-the-math">
+            <legend>To verify you're human, solve this math problem!</legend>
+            <img src="../../media/images/static/math_problem_logarithms_2.png" width="500px" height="auto"><br>
+
+            <input id="right-answer" type="radio" name="math-robot" value="10" />
+            <label for="right-answer">10</label>
+
+            <input value="6" id="wrong-1" type="radio" name="math-robot" />
+            <label for="wrong-1">6</label>
+
+            <input value="5-squared" id="wrong-2" type="radio" name="math-robot" />
+            <label for="wrong-2">5<sup>2</sup></label>
+        </fieldset>
+
+        <fieldset>
+            <legend>What did you appreciate about us?</legend>
+
+            <input type="checkbox" id="1" name="1" value="1" />
+            <label for="ads">Our amazing service</label>
+
+            <input type="checkbox" id="2" name="2" value="2" />
+            <label for="ads">The amazing waitresses</label>
+
+            <input type="checkbox" id="3" name="3" value="3" />
+            <label for="ads">Something else! (below)</label>
+            <br>
+
+            <textarea placeholder="add any additional comments here.. (optional)" cols="20" rows="3"></textarea>
+        </fieldset>
+
+        <button id="submit">Submit!</button>
+    </form>
+</body>
+
+</html>
