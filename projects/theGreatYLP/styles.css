@@ -2,17 +2,30 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Styling per elements. */
+p {
+    margin-top: -10px;
+}
+
 a {
     text-decoration: none;
     color: darkcyan;
 }
 
+
+/* Styling per class. */
 .tiny-header {
     font-size: 0.5em;
     vertical-align: super;
     color: gray;
 }
 
+.below-header {
+    margin-top: -15px;
+    margin-bottom: 20px;
+}
+
+/* Styling per ID. */
 #small-hr {
     width: 50%;
     margin-left: 0%;
