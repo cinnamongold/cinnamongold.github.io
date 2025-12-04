@@ -41,7 +41,7 @@ footer p {
 }
 
 #logo {
-  width: 8%;
+  width: 2.2em;
   display: inline;
   position: relative;
   top: 15px;
@@ -58,7 +58,7 @@ footer p {
 #return-button-div {
   position: fixed;
   top: 0.5em;
-  left: 44.5em;
+  left: 50%;
   transform: translateX(-50%);
 }
 
