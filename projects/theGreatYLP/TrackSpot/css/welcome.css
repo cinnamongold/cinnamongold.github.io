@@ -11,11 +11,22 @@
 
 body {
     font-family: 'Clash Display', sans-serif;
-    margin: 2% 5%;
-    padding: 0;
+    margin: 2em 1em;
+    padding: 2em 0em;
     background-color: #f5f5f5;
-    color: #333333;
+    color: #000;
+    -webkit-text-stroke: 0.5px white;
     text-align: center;
+
+    background: linear-gradient(rgba(99, 12, 92, 0.8), rgba(12, 6, 71, 0.8)) no-repeat center center fixed;
+    background-size: cover;
+
+    backdrop-filter: blur(2px) saturate(180%);
+    border-radius: 4em 2em;
+}
+
+a {
+  color: #78aeff
 }
 
 button {
@@ -23,7 +34,12 @@ button {
   width: 10em;
   height: 3em;
 
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(180%);
   border-radius: 2em 4em 1.2em 0.6em;
+
+  -webkit-text-stroke: 0px;
+  color: white;
 }
 
 footer:not(p) {
@@ -33,6 +49,9 @@ footer:not(p) {
 footer p {
   margin-top: -1.8em;
   font-size: 0.75em;
+
+  -webkit-text-stroke: 0px;
+  color:white;
 }
 
 .header-text {
@@ -60,8 +79,18 @@ footer p {
   top: 0.5em;
   left: 50%;
   transform: translateX(-50%);
+
+  color: pink;
 }
 
 #return-button-div img {
   width: 1em;
+}
+
+#unfinished {
+  font-size: 1.2em;
+  margin-top: -0.5em;
+
+  -webkit-text-stroke: 0px;
+  color: white;
 }
