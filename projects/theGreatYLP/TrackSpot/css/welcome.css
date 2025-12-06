@@ -25,6 +25,10 @@ body {
     border-radius: 4em 2em;
 }
 
+p {
+  -webkit-text-stroke: 0.1px;
+}
+
 a {
   color: #78aeff
 }
