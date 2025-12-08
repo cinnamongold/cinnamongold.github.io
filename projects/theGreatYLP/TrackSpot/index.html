@@ -58,7 +58,7 @@
 
         const clientId = '3876dfbb34e04fbdb28027a22c38a557';  // From Spotify dashboard
         const redirectUri = 'https://cinnamongold.github.io/auth/spotify';  // Exact match from dashboard
-        const scope = '';  // Space-separated, adjust as needed
+        const scope = 'user-read-playback-state';  // Space-separated, adjust as needed
         const state = generateRandomString(16);  // Random 16-char string for security (implement below)
 
         const authUrl = `https://accounts.spotify.com/authorize?` +
