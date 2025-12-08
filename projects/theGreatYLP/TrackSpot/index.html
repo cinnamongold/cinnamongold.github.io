@@ -13,32 +13,71 @@
     <!--CSS and styles-->
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="css/welcome.css"> <!--Welcome to TrackSpot CSS loader-->
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
+        rel="stylesheet">
     <title>TrackSpot - Welcome</title>
 </head>
 
 <body>
     <header>
         <!--Exit button-->
-        <a href="../"><div id="return-button-div"><img src="../../../media/images/static/back-icon.png"><p class="roboto-slab-200" id="return-button">Return</p></div></a>
+        <a href="../">
+            <div id="return-button-div"><img src="../../../media/images/static/back-icon.png">
+                <p class="roboto-slab-200" id="return-button">Return</p>
+            </div>
+        </a>
 
         <!--Welcome header-->
-        <div class="header-text"><h1>Welcome to <img src="../../../media/svg/TrackSpotOfficialLogo.svg" alt="TrackSpot logo" id="logo"></h1></div>
-        <p id="unfinished">This website is currently unfinished! If you don't want to stay, <a href="../">click me to leave!</a></p>
+        <div class="header-text">
+            <h1>Welcome to <img src="../../../media/svg/TrackSpotOfficialLogo.svg" alt="TrackSpot logo" id="logo"></h1>
+        </div>
+        <p id="unfinished">This website is currently unfinished! If you don't want to stay, <a href="../">click me to
+                leave!</a></p>
     </header>
 
     <!--Main section!!-->
     <main>
         <section id="login">
-            <a href=""><button><span id="text-login-with">Login with </span><img src="../../../media/images/static/spotify_logo.png" id="spotify-logo"></button></a>
+            <button id="spotify-login"><span id="text-login-with">Login with </span><img
+                        src="../../../media/images/static/spotify_logo.png" id="spotify-logo"></button>
         </section>
     </main>
 
     <footer>
         <p><i>Fonts licensed for free from <a href="https://fontshare.com">Fontshare</a>.</i></p><br>
-        <p>All graphics on this webpage have been created by nico in Affinity. Please review the <a href="../../../legal/" target="_blank">copyright policy</a> before using one of these graphics.</p>
-        <p>Spotify and the Spotify logo are trademarks of Spotify AB. © Spotify AB. All rights reserved.  This project is not affiliated with or endorsed by Spotify AB.</p>
+        <p>All graphics on this webpage have been created by nico in Affinity. Please review the <a
+                href="../../../legal/" target="_blank">copyright policy</a> before using one of these graphics.</p>
+        <p>Spotify and the Spotify logo are trademarks of Spotify AB. © Spotify AB. All rights reserved. This project is
+            not affiliated with or endorsed by Spotify AB.</p>
     </footer>
+
+    <script>
+        document.getElementById('spotify-login').onclick = function () {
+            window.location.href = authUrl;
+        }
+
+        const clientId = '3876dfbb34e04fbdb28027a22c38a557';  // From Spotify dashboard
+        const redirectUri = 'https://cinnamongold.github.io/auth/spotify';  // Exact match from dashboard
+        const scope = '';  // Space-separated, adjust as needed
+        const state = generateRandomString(16);  // Random 16-char string for security (implement below)
+
+        const authUrl = `https://accounts.spotify.com/authorize?` +
+            `client_id=${encodeURIComponent(clientId)}&` +
+            `response_type=code&` +
+            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+            `scope=${encodeURIComponent(scope)}&` +
+            `state=${encodeURIComponent(state)}`;
+
+        function generateRandomString(length) {
+            let text = '';
+            const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (let i = 0; i < length; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+        }
+
+    </script>
 </body>
 
 </html>
