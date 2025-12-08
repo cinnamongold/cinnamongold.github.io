@@ -27,6 +27,7 @@ body {
 
 p {
   -webkit-text-stroke: 0.1px;
+  margin-bottom: 3em;
 }
 
 a {
@@ -35,7 +36,7 @@ a {
 
 button {
   font-family: "Roboto Slab", serif;
-  width: 10em;
+  width: 20em;
   height: 3em;
 
   background: rgba(255, 255, 255, 0.15);
@@ -61,6 +62,20 @@ footer p {
 .header-text {
   font-size: 1.5em;
   margin-top: -0.5em;
+}
+
+#text-login-with {
+  display: inline;
+  position: relative;
+  left: -2em;
+}
+
+#spotify-logo {
+  width: 4em;
+  display: inline;
+  position: absolute;
+  top: -0.65em;
+  left: 11em;
 }
 
 #logo {
