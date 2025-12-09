@@ -36,8 +36,6 @@ a {
 
 button {
   font-family: "Roboto Slab", serif;
-  width: 20em;
-  height: 3em;
 
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(2px) saturate(180%);
@@ -66,16 +64,18 @@ footer p {
 
 #text-login-with {
   display: inline;
-  position: relative;
-  left: -2em;
+}
+
+#spotify-login {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  padding: 0rem 8rem;
 }
 
 #spotify-logo {
-  width: 4em;
+  width: 5em;
   display: inline;
-  position: absolute;
-  top: -0.65em;
-  left: 11em;
 }
 
 #logo {
