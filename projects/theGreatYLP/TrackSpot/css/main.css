@@ -1,0 +1,45 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap');
+
+
+.roboto-slab-500 {
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 1em;
+    margin: 2em 1em;
+    padding: 2em 0em;
+    color: #000;
+    -webkit-text-stroke: 0.5px white;
+    text-align: center;
+
+    background: linear-gradient(rgba(99, 12, 92, 0.8), rgba(12, 6, 71, 0.8)) no-repeat center center fixed;
+    background-size: cover;
+}
+
+a {
+    text-decoration: none;
+}
+
+p, a, span {
+    background-image: -webkit-linear-gradient(270deg, #24fbf0, #002fff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    -webkit-text-stroke: 0px white;
+}
+
+/*
+Preset for a glassmorphism card
+
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(2px) saturate(180%);
+    border-radius: 4em 2em;
+
+*/
