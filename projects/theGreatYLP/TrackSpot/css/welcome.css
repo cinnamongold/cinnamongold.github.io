@@ -23,6 +23,7 @@ body {
 
     backdrop-filter: blur(2px) saturate(180%);
     border-radius: 4em 2em;
+    border: 2px solid rgba(255, 255, 255, 0.18);
 }
 
 p {
@@ -38,8 +39,7 @@ button {
   font-family: "Roboto Slab", serif;
 
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(2px) saturate(180%);
-  border-radius: 2em 4em 1.2em 0.6em;
+  border-radius: 1.5rem;
 
   -webkit-text-stroke: 0px;
   color: white;
@@ -62,25 +62,43 @@ footer p {
   margin-top: -0.5em;
 }
 
-#text-login-with {
-  display: inline;
+.coming-soon-text {
+  font-size: 0.75rem;
+  color:lightgray;
 }
 
-#spotify-login {
+#spotify-login, #apple-login {
   display: inline-flex;
   align-items: center;
   width: auto;
-  padding: 0rem 8rem;
+  padding: 0rem 3rem;
+  font-size: 1.5em;
+  margin: 1em;
+  border: none;
+
+  cursor: pointer;
 }
 
-#spotify-logo {
+/* Padding centralization */
+#apple-login {
+  opacity: 0.5;
+  cursor: not-allowed;
+
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+#spotify-login:hover, #apple-login:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+#spotify-logo, #apple-logo {
   width: 5em;
-  display: inline;
+  margin: 1rem;
 }
 
 #logo {
   width: 2.2em;
-  display: inline;
   position: relative;
   top: 15px;
 }
@@ -113,10 +131,18 @@ footer p {
   -webkit-text-stroke: 0px;
   color: white;
 }
+/*
+
+*/
 
 /* Transformations, shadows, and extra filters */
 button {
-  box-shadow: 2px 8px 15px rgba(0,0,0,0.2);
+  box-shadow: 6px 12px 15px rgba(0,0,0,0.2);
+  backdrop-filter: blur(2px) saturate(280%);
+}
+
+#apple-login {
+  box-shadow: -6px 12px 15px rgba(0,0,0,0.2);
 }
 
 p, h1 {
