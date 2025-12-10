@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-body {
+html, body {
     font-family: 'Clash Display', sans-serif;
     margin: 2em 1em;
     padding: 2em 0em;
