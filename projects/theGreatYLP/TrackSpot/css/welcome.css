@@ -65,6 +65,10 @@ footer p {
 .coming-soon-text {
   font-size: 0.75rem;
   color:lightgray;
+
+  position: absolute;
+  bottom: 1rem;
+  left: 3rem;
 }
 
 #spotify-login, #apple-login {
