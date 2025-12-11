@@ -1,0 +1,13 @@
+body {
+  padding: 50px 0;
+  margin: 0 auto;
+  min-height: calc(100vh - 100px);
+  width: 100vw;
+
+  text-align: center;
+  font-family: Arial, serif;
+}
+
+hr, section {
+  width: 50%;
+}
