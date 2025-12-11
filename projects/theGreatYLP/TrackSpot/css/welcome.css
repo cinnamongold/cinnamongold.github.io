@@ -87,13 +87,13 @@ footer p {
   cursor: pointer;
 }
 
-/* Padding centralization */
+/* Disallow clicking and fix padding */
 #apple-login {
   opacity: 0.5;
   cursor: not-allowed;
 
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 
 #spotify-login:hover, #apple-login:hover {
@@ -154,7 +154,7 @@ button {
 }
 
 p, h1 {
-  filter: drop-shadow(10px 5px 5px rgba(0,0,0,0.2));
+  filter: drop-shadow(10px 5px 1px rgba(0,0,0,0.3));
 }
 
 #logo {
