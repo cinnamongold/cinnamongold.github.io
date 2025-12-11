@@ -9,7 +9,11 @@
   font-style: normal;
 }
 
-html, body {
+html {
+  background-color: purple;
+}
+
+body {
     font-family: 'Clash Display', sans-serif;
     margin: 2em 1em;
     padding: 2em 0em;
