@@ -56,7 +56,8 @@ a {
 }
 
 .selected-nav {
-    text-shadow: 5px 5px 20px rgb(255, 255, 255);
+    color: #fcff3f;
+    text-shadow: 5px 5px 20px rgb(250, 255, 95);
     border-bottom: 2px solid lightgrey;
 }
 
@@ -114,6 +115,38 @@ h1, p {
 
 .colwhite {
     color: white;
+}
+
+/* Transformation specific classes */
+.deselected-nav {
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out;
+}
+
+.selected-nav {
+    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+#logo {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover classes */
+.deselected-nav:hover {
+    text-shadow: 5px 5px 20px rgb(255, 255, 255);
+    border-bottom: 2px solid lightgrey;
+
+    transform: translateY(-2px);
+    color: #f8ff32;
+}
+
+.selected-nav:hover {
+    transform: translateY(-2px);
+}
+
+#logo:hover {
+    transform: scale(1.05);
+    transform: rotateZ(5deg);
+    transition: transform 0.2s ease-in-out;
 }
 
 /*
