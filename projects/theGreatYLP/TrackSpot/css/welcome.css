@@ -10,24 +10,25 @@
 }
 
 :root {
-  background-color: purple;
+  background: linear-gradient(rgba(99, 12, 92, 0.8), rgba(12, 6, 71, 0.8)) no-repeat center center fixed;
+  background-size: cover;
 }
 
 body {
-    font-family: 'Clash Display', sans-serif; 
-    margin: 2em 1em;
-    padding: 2em 0em;
-    background-color: #f5f5f5;
-    color: #000;
-    -webkit-text-stroke: 0.5px white;
-    text-align: center;
+  font-family: 'Clash Display', sans-serif;
+  margin: 2em 1em;
+  padding: 2em 0em;
+  background-color: #f5f5f5;
+  color: #000;
+  -webkit-text-stroke: 0.5px white;
+  text-align: center;
 
-    background: linear-gradient(rgba(99, 12, 92, 0.8), rgba(12, 6, 71, 0.8)) no-repeat center center fixed;
-    background-size: cover;
+  background: linear-gradient(rgba(99, 12, 92, 0.8), rgba(12, 6, 71, 0.8)) no-repeat center center fixed;
+  background-size: cover;
 
-    backdrop-filter: blur(2px) saturate(180%);
-    border-radius: 4em 2em;
-    border: 2px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(2px) saturate(180%);
+  border-radius: 4em 2em;
+  border: 2px solid rgba(255, 255, 255, 0.18);
 }
 
 p {
@@ -58,7 +59,7 @@ footer p {
   font-size: 0.75em;
 
   -webkit-text-stroke: 0px;
-  color:white;
+  color: white;
 }
 
 .header-text {
@@ -68,14 +69,15 @@ footer p {
 
 .coming-soon-text {
   font-size: 0.75rem;
-  color:lightgray;
+  color: lightgray;
 
   position: absolute;
   bottom: 1rem;
   left: 3rem;
 }
 
-#spotify-login, #apple-login {
+#spotify-login,
+#apple-login {
   display: inline-flex;
   align-items: center;
   width: auto;
@@ -96,11 +98,13 @@ footer p {
   padding-bottom: 0.2rem;
 }
 
-#spotify-login:hover, #apple-login:hover {
+#spotify-login:hover,
+#apple-login:hover {
   background: rgba(255, 255, 255, 0.25);
 }
 
-#spotify-logo, #apple-logo {
+#spotify-logo,
+#apple-logo {
   width: 5em;
   margin: 1rem;
 }
@@ -139,24 +143,47 @@ footer p {
   -webkit-text-stroke: 0px;
   color: white;
 }
+
 /*
 
 */
 
 /* Transformations, shadows, and extra filters */
 button {
-  box-shadow: 6px 12px 15px rgba(0,0,0,0.2);
+  box-shadow: 6px 12px 15px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(2px) saturate(280%);
 }
 
 #apple-login {
-  box-shadow: -6px 12px 15px rgba(0,0,0,0.2);
+  box-shadow: -6px 12px 15px rgba(0, 0, 0, 0.2);
 }
 
-p, h1 {
-  filter: drop-shadow(10px 5px 1px rgba(0,0,0,0.3));
+p,
+h1 {
+  filter: drop-shadow(10px 5px 1px rgba(0, 0, 0, 0.3));
 }
 
 #logo {
-  filter: drop-shadow(10px 15px 3px rgba(0,0,0,0.5));
+  filter: drop-shadow(10px 15px 3px rgba(0, 0, 0, 0.5));
+}
+
+/* Shrink buttons if zoom is too high */
+@media (max-width: 400px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  button {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  button span {
+    padding-top: 0.5rem;
+  }
+
+  #spotify-logo,
+  #apple-logo {
+    width: 3.5em;
+  }
 }
