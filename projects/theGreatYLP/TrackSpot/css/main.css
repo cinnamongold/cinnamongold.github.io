@@ -8,6 +8,15 @@
   font-style: normal;
 }
 
+.general-sans-body {
+    font-family: 'General Sans', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    text-shadow: none;
+}
+
 body {
     font-family: 'Clash Display', sans-serif;
     font-size: calc(1em);
@@ -32,6 +41,23 @@ a {
     text-decoration: none;
 }
 
+button {
+    background: rgba(255,255,255,0.25);
+    color: white;
+
+    padding: 0.5em 1em;
+    border: 2px solid whitesmoke;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.b-red {
+    background-color: rgba(220, 69, 69, 0.418);
+
+    transition: background-color 0.2s ease-in-out;
+}
+
 .top-navigation {
     display: flex;
     align-items: center;
@@ -48,11 +74,11 @@ a {
     font-size: 140%;
 }
 
-.sign-out {
+.settings-icon {
     position: fixed;
     width: 5vw;
-    bottom: 0;
-    left: 0;
+    bottom: 1vh;
+    left: 1vw;
 }
 
 .selected-nav {
@@ -63,6 +89,26 @@ a {
 
 #logo {
     width: 6em;
+}
+
+#settings:target {
+    display: block;
+
+    position: absolute;
+    margin: 0 auto;
+    z-index: 1;
+    overflow: auto;
+
+    left: 10vw;
+    bottom: 12.5vh;
+    width: 80vw;
+    height: 75vh;  
+
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+      
 }
 
 /* CHANGE TOP NAV IF ZOOM IS TOO HIGH */
@@ -84,6 +130,10 @@ a {
     .top-navigation a {
         font-size: 4px;
         padding: 0em 0em;
+    }
+
+    .settings-icon {
+        width: 15vw;
     }
 
     #logo {
@@ -119,11 +169,11 @@ h1, p {
 
 /* Transformation specific classes */
 .deselected-nav {
-    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out, border 0.2s ease-in-out;
 }
 
 .selected-nav {
-    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out;
 }
 
 #logo {
@@ -141,12 +191,23 @@ h1, p {
 
 .selected-nav:hover {
     transform: translateY(-2px);
+    text-shadow: 5px 5px 20px rgb(230, 255, 9);
+    border-bottom: 5px double yellow;
+}
+
+.b-red:hover {
+    background-color: rgba(255, 43, 43, 0.418);
 }
 
 #logo:hover {
     transform: scale(1.05);
     transform: rotateZ(5deg);
     transition: transform 0.2s ease-in-out;
+}
+
+/* Hidden menus on start (ON for now) */
+#settings {
+    display: none;
 }
 
 /*
