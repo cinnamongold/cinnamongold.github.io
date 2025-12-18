@@ -55,7 +55,7 @@ button {
 .b-red {
     background-color: rgba(220, 69, 69, 0.418);
 
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border 0.3s ease-in-out;
 }
 
 .top-navigation {
@@ -87,6 +87,20 @@ button {
     border-bottom: 2px solid lightgrey;
 }
 
+#close-settings {
+    display: inline;
+    margin-top: 1rem;
+
+    font-size: 0.5rem;
+    border: none;
+}
+
+#settings-header {
+    display: inline;
+    font-size: 2rem;
+    margin-top: 4rem;
+}
+
 #logo {
     width: 6em;
 }
@@ -96,11 +110,12 @@ button {
 
     position: absolute;
     margin: 0 auto;
+    padding: 2vh 2vw;
     z-index: 1;
     overflow: auto;
 
-    left: 10vw;
-    bottom: 12.5vh;
+    left: 9vw;
+    bottom: 11.5vh;
     width: 80vw;
     height: 75vh;  
 
@@ -197,6 +212,7 @@ h1, p {
 
 .b-red:hover {
     background-color: rgba(255, 43, 43, 0.418);
+    border: 2px solid rgba(255, 144, 144, 0.86);
 }
 
 #logo:hover {
