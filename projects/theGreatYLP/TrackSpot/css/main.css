@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap');
 
 .roboto-slab-500 {
-  font-family: "Roboto Slab", serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
 }
 
 .general-sans-body {
@@ -42,7 +42,7 @@ a {
 }
 
 button {
-    background: rgba(255,255,255,0.25);
+    background: rgba(255, 255, 255, 0.25);
     color: white;
 
     padding: 0.5em 1em;
@@ -63,6 +63,10 @@ button {
 }
 
 .top-navigation {
+    border-width: 4px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #2382ff00 0%, #ff86eb 25%, #9c8fff 75%, #fc49ff00 100%) 1;
+
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -70,7 +74,9 @@ button {
 
     border-radius: 10px;
 
-    padding: 0.5em 1em
+    padding: 0.5em 1em;
+
+    transition: border-image 0.3s ease-out, border-width 0.3s ease-out;
 }
 
 .top-navigation a:not(img) {
@@ -121,7 +127,7 @@ button {
     left: 9vw;
     bottom: 11.5vh;
     width: 80vw;
-    height: 75vh;  
+    height: 75vh;
 
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(15px) saturate(180%) sepia(35%);
@@ -165,7 +171,8 @@ button {
 
 /* FX and processing */
 
-h1, p {
+h1,
+p {
     text-shadow: 5px 0.5px 2px rgba(0, 0, 0, 0.7);
 }
 
@@ -195,6 +202,10 @@ h1, p {
     transition: transform 0.2s ease-in-out, border 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out, color 0.3s ease-in-out;
 }
 
+.top-navigation {
+    transition: border-image 0.8s ease-out, border-width 0.3s ease-in-out;
+}
+
 #logo {
     transition: transform 0.2s ease-in-out;
 }
@@ -213,6 +224,12 @@ h1, p {
     text-shadow: 5px 5px 20px rgb(230, 255, 9);
     border-bottom: 5px double yellow;
     color: #ffe570;
+}
+
+.top-navigation:hover {
+    border-width: 6px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #2382ff00 0%, #ff86a0 25%, #e78fff 75%, #fc49ff00 100%) 1;
 }
 
 .b-red:hover {
