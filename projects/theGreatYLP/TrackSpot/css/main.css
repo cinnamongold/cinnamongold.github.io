@@ -186,13 +186,13 @@ h1, p {
     color: white;
 }
 
-/* Transformation specific classes */
+/* Transition specific classes */
 .deselected-nav {
     transition: color 0.2s ease-in-out, transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out, border 0.2s ease-in-out;
 }
 
 .selected-nav {
-    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out;
+    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out, text-shadow 0.2s ease-in-out, border-bottom 0.5s ease-in-out, color 0.3s ease-in-out;
 }
 
 #logo {
@@ -212,6 +212,7 @@ h1, p {
     transform: translateY(-2px);
     text-shadow: 5px 5px 20px rgb(230, 255, 9);
     border-bottom: 5px double yellow;
+    color: #ffe570;
 }
 
 .b-red:hover {
