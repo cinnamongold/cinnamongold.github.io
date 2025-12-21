@@ -55,7 +55,7 @@
 
         const clientId = '3876dfbb34e04fbdb28027a22c38a557'; 
         const redirectUri = 'https://cinnamongold.github.io/projects/theGreatYLP/TrackSpot/main'; 
-        const scope = 'user-read-playback-state';  // Separated by spaces if multiple scopes are needed
+        const scope = 'user-read-playback-state user-read-currently-playing';  // Separated by spaces if multiple scopes are needed
         const state = generateRandomString(16);
 
         const authUrl = `https://accounts.spotify.com/authorize?` +
