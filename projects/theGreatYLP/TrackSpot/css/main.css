@@ -43,7 +43,7 @@ p {
     font-size: 1em;
 }
 
-a {
+a, a:visited {
     text-decoration: none;
 }
 
@@ -124,6 +124,13 @@ button {
     width: 50%;
 }
 
+.anchor-yeah {
+    color:lightblue;
+    text-decoration: underline;
+    text-shadow: none;
+    margin-left: 2rem;
+}
+
 #close-settings {
     display: inline;
     margin-top: 1rem;
@@ -144,7 +151,7 @@ button {
 
 #album-cover {
     padding: 0 auto;
-    box-shadow: 6px 6px 5px black;
+    box-shadow: 6px 6px 15px rgb(28,28,28);
 
     max-height: 40vh;
     max-width: 80%;
@@ -260,6 +267,10 @@ p {
 
 #logo {
     transition: transform 0.2s ease-in-out;
+}
+
+#status-text, #album-cover {
+    transition: opacity 0.4s ease;
 }
 
 /* Hover classes */

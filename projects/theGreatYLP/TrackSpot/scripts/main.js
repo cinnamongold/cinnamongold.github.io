@@ -87,6 +87,8 @@ function clearUrlParams() {
 
 getUserCode();
 
+let lastTrackId = null;
+
 async function getCurrentlyPlaying() {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -101,9 +103,17 @@ async function getCurrentlyPlaying() {
         }
     });
 
-    if (response.status == 204) {
+    if (response.status === 204) {
         console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = "You are not playing music right now."
+        document.getElementById("status-text").innerHTML = `Your account token has expired! <a href="../">Please login again.</a>`
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        return;
+    }
+
+    if (response.status === 401) {
+        console.log("Nothing is currently playing.");
+        document.getElementById("status-text").innerHTML = `Your account token has expired! <a href="../" class="anchor-yeah">Please login again.</a>`
         return;
     }
 
@@ -121,19 +131,9 @@ async function getCurrentlyPlaying() {
     const name = data.item.name;
     const artists = item.artists.map(a => a.name).join(', ');
     const albumCoverUrl = item.album.images[0].url;
+    const trackId = item.id;
 
-    // SHOW SONG TITLE AND ALBUM COVER IF PLAYING
-    const isPlaying = data.is_playing;
-    if (!isPlaying || !item) {
-        document.getElementById("status-text").innerHTML = "You are not playing music right now.";
-    } else {
-        document.getElementById("status-text").innerHTML = `${name}<hr class="artist-hr">${artists}`;
-        document.getElementById("album-cover").src = albumCoverUrl;
-    }
-
-    if(albumCoverUrl) {
-        albumImg.src = albumCoverUrl;
-    }
+    updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId)
 }
 
 if (hasCodeInUrl()) {

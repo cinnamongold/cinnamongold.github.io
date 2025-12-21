@@ -1,3 +1,7 @@
+const card = document.getElementById("now-playing-card");
+const img = document.getElementById("album-cover");
+const statusText = document.getElementById("status-text");
+
 function getAverageColor(imgE1) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -10,32 +14,56 @@ function getAverageColor(imgE1) {
     const imageData = ctx.getImageData(0, 0, width, height);
     const data = imageData.data;
 
-    let r = 0, g=0, b=0, count=0;
+    let r = 0, g = 0, b = 0, count = 0;
 
-    for (let i=0;i<data.length;i+=4*10) {
-        r+=data[i];
-        g+=data[i+1];
-        b+=data[i+2];
+    for (let i = 0; i < data.length; i += 4 * 10) {
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
         count++;
     }
 
-    r = Math.round(r/count);
-    g = Math.round(g/count);
-    b = Math.round(b/count);
+    r = Math.round(r / count);
+    g = Math.round(g / count);
+    b = Math.round(b / count);
 
-    return {r,g,b};
+    return { r, g, b };
 }
 
 const albumImg = document.getElementById("album-cover");
 const bgDiv = document.getElementById("now-playing-card");
 const outerColor = 'rgba(255, 255, 255, 0.25)';
 
-albumImg.onload = function() {
-    const {r,g,b} = getAverageColor(albumImg);
+function updateGradientFromImage() {
+    const { r, g, b } = getAverageColor(albumImg);
     const centerColor = `rgb(${r},${g},${b})`;
 
     bgDiv.style.backgroundImage = `radial-gradient(circle at 50% 60%,
     ${centerColor} 0%,
     ${centerColor} 35%,
     ${outerColor} 90%)`;
+}
+
+function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId) {
+    if (trackId && trackId == lastTrackId) {
+        statusText.innerHTML = `${name}<hr class="artist-hr">${artists}`;
+        img.src = albumCoverUrl;
+        return;
+    }
+
+    lastTrackId = trackId;
+
+    statusText.style.opacity = '0';
+    img.style.opacity = '0';
+
+    setTimeout(() => {
+        document.getElementById("status-text").innerHTML = `${name}<hr class="artist-hr">${artists}`;
+        img.src = albumCoverUrl;
+
+        img.onload = () => {
+            statusText.style.opacity = '1';
+            img.style.opacity = '1';
+            updateGradientFromImage();
+        };
+    }, 200);
 }
