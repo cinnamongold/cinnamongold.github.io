@@ -87,14 +87,6 @@ function clearUrlParams() {
 
 getUserCode();
 
-if (hasCodeInUrl()) {
-    exchangeCodeForToken().then(() => {
-        clearUrlParams();
-    });
-} else {
-    console.log('No new code in URL, not calling /api/token again');
-}
-
 async function getCurrentlyPlaying() {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -138,6 +130,14 @@ async function getCurrentlyPlaying() {
         document.getElementById("status-text").innerHTML = `${name}<hr class="artist-hr">${artists}`;
         document.getElementById("album-cover").src = albumCoverUrl;
     }
+}
+
+if (hasCodeInUrl()) {
+    exchangeCodeForToken().then(() => {
+        clearUrlParams();
+    });
+} else {
+    console.log('No new code in URL, not calling /api/token again');
 }
 
 if (localStorage.getItem('access_token')) {
