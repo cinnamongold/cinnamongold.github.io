@@ -185,6 +185,16 @@ button {
     list-style-position: inside;
 }
 
+#track-title, #track-artists {
+    font-size: 1.25rem;
+    text-shadow: none;
+}
+
+#every-10-seconds {
+    font-size: 0.75rem;
+    text-shadow: none;
+}
+
 /* CHANGE TOP NAV IF ZOOM IS TOO HIGH */
 
 @media (max-width: 500px) {

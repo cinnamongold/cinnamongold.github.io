@@ -113,7 +113,7 @@ async function getCurrentlyPlaying() {
 
     if (response.status === 401) {
         console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = `Your account token has expired! <a href="../" class="anchor-yeah">Please login again.</a>`
+        document.getElementById("status-text").innerHTML = `We're retrieving your music. If this takes too long, try logging out in the settings panel.`
         return;
     }
 
