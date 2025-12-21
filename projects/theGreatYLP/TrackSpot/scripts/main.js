@@ -105,7 +105,7 @@ async function getCurrentlyPlaying() {
 
     if (response.status === 204) {
         console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = `Your account token has expired! <a href="../">Please login again.</a>`
+        document.getElementById("status-text").innerHTML = `We aren't getting any music! Make sure you're listening online and you're not in a private session.`
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         return;
@@ -119,6 +119,7 @@ async function getCurrentlyPlaying() {
 
     if (!response.ok) {
         console.error("Error from spotify:", response.status, await response.text());
+        document.getElementById("status-text").innerHTML = `We aren't getting any music! Make sure you're listening online and you're not in a private session.`
         return;
     }
 

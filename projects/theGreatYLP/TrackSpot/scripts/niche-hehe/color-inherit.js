@@ -2,6 +2,12 @@ const card = document.getElementById("now-playing-card");
 const img = document.getElementById("album-cover");
 const statusText = document.getElementById("status-text");
 
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 function getAverageColor(imgE1) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -46,7 +52,8 @@ function updateGradientFromImage() {
 
 function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId) {
     if (trackId && trackId == lastTrackId) {
-        statusText.innerHTML = `${name}<hr class="artist-hr">${artists}`;
+        document.getElementById('track-title').textContent = name;
+        document.getElementById('track-artists').textContent = artists;
         img.src = albumCoverUrl;
         return;
     }
@@ -57,7 +64,8 @@ function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId) {
     img.style.opacity = '0';
 
     setTimeout(() => {
-        document.getElementById("status-text").innerHTML = `${name}<hr class="artist-hr">${artists}`;
+        document.getElementById('track-title').textContent = name;
+        document.getElementById('track-artists').textContent = artists;
         img.src = albumCoverUrl;
 
         img.onload = () => {
