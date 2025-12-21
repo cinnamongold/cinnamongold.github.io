@@ -118,17 +118,21 @@ async function getCurrentlyPlaying() {
     // Update actual HTML and stuff based on now playing
 
     const item = data.item;
+    const name = data.item.name;
+    const artists = item.artists.map(a => a.name).join(', ');
+    const albumCoverUrl = item.album.images[0].url;
 
     // SHOW SONG TITLE AND ALBUM COVER IF PLAYING
     const isPlaying = data.is_playing;
     if (!isPlaying || !item) {
         document.getElementById("status-text").innerHTML = "You are not playing music right now.";
     } else {
-        const name = data.item.name;
-        const artists = item.artists.map(a => a.name).join(', ');
-        const albumCoverUrl = item.album.images[0].url;
         document.getElementById("status-text").innerHTML = `${name}<hr class="artist-hr">${artists}`;
         document.getElementById("album-cover").src = albumCoverUrl;
+    }
+
+    if(albumCoverUrl) {
+        albumImg.src = albumCoverUrl;
     }
 }
 
