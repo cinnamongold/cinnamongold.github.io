@@ -147,6 +147,8 @@ button {
     box-shadow: 6px 6px 5px black;
 
     max-height: 40vh;
+    max-width: 80%;
+    overflow-x: auto;
 }
 
 #settings:target {
@@ -183,6 +185,10 @@ button {
         font-size: 1.5em;
     }
 
+    h2 {
+        font-size: 1rem;
+    }
+
     p {
         font-size: 0.4em;
     }
@@ -195,6 +201,11 @@ button {
     .top-navigation a {
         font-size: 4px;
         padding: 0em 0em;
+    }
+
+    .large-card p {
+        font-size: 0.5rem;
+        padding: 5px;
     }
 
     .settings-icon {
