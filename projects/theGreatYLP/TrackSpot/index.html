@@ -36,8 +36,21 @@
     <!--Main section!!-->
     <main>
         <section id="login">
-            <button id="spotify-login"><span class="text-login-with">Login with </span><img src="../../../media/svg/Spotify_logo_with_text.svg" id="spotify-logo"></button>
-            <button id="apple-login"><span class="text-login-with">Login with </span><img src="../../../media/svg/Apple_Music_logo.svg" id="apple-logo">* </button> <br><span class="coming-soon-text">*Apple Music will be supported in the future.</span>
+            <button id="spotify-login"><span class="text-login-with">Login with </span><img
+                    src="../../../media/svg/Spotify_logo_with_text.svg" id="spotify-logo"></button>
+            <button id="apple-login"><span class="text-login-with">Login with </span><img
+                    src="../../../media/svg/Apple_Music_logo.svg" id="apple-logo">* </button> <br><span
+                class="coming-soon-text">*Apple Music will be supported in the future.</span>
+        </section>
+
+        <section id="login-uri">
+            <h2>Login URI (for debugging)</h2>
+            <label for="login-internet"><input name="login-type" id="login-internet"
+                    value="https://cinnamongold.github.io/projects/theGreatYLP/TrackSpot/main" type="radio"
+                    checked>Login using the Internet (recommended)</label><br>
+            <label for="login-local"><input name="login-type" id="login-local"
+                    value="http://127.0.0.1:5500/projects/theGreatYLP/TrackSpot/main/" type="radio">Login using local
+                server (for development)</label>
         </section>
     </main>
 
@@ -45,36 +58,11 @@
         <p><i>Fonts licensed for free from <a href="https://fontshare.com">Fontshare</a>.</i></p>
         <p>All graphics on this webpage have been created by nico in Affinity. Please review the <a
                 href="../../../legal/" target="_blank">copyright policy</a> before using one of these graphics.</p>
-        <p>Spotify and the Spotify logo are trademarks of Spotify AB. © Spotify AB. All rights reserved. This project is not affiliated with or endorsed by Spotify AB.</p>
+        <p>Spotify and the Spotify logo are trademarks of Spotify AB. © Spotify AB. All rights reserved. This project is
+            not affiliated with or endorsed by Spotify AB.</p>
         <p>Apple Music and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. </p>
     </footer>
-    <script>
-        document.getElementById('spotify-login').onclick = function () {
-            window.location.href = authUrl;
-        }
-
-        const clientId = '3876dfbb34e04fbdb28027a22c38a557'; 
-        const redirectUri = 'https://cinnamongold.github.io/projects/theGreatYLP/TrackSpot/main'; 
-        const scope = 'user-read-playback-state user-read-currently-playing';  // Separated by spaces if multiple scopes are needed
-        const state = generateRandomString(16);
-
-        const authUrl = `https://accounts.spotify.com/authorize?` +
-            `client_id=${encodeURIComponent(clientId)}&` +
-            `response_type=code&` +
-            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
-            `scope=${encodeURIComponent(scope)}&` +
-            `state=${encodeURIComponent(state)}`;
-
-        function generateRandomString(length) {
-            let text = '';
-            const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            for (let i = 0; i < length; i++) {
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-            return text;
-        }
-
-    </script>
+    <script src="scripts/build-auth-url.js"></script> <!--For building the redirect URI-->
 </body>
 
 </html>

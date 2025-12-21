@@ -144,6 +144,11 @@ footer p {
   color: white;
 }
 
+#login-uri {
+  -webkit-text-stroke: 0px;
+  color: lightgrey;
+}
+
 /*
 
 */

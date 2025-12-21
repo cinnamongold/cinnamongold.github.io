@@ -32,11 +32,14 @@
 
     <main>
 
-        <h1 class="outline">Now Playing</h1>
-        <p class="colwhite">This page is a work in progress!!! Expect some more cool stuff soon :&#41;&#41;</p>
+        
 
-        <div class="attempt">
+        <div class="large-card">
+            <h2 class="outline">Now Playing</h2 >
+            <p class="colwhite" id="status-text">This will update depending on your listening status :&#41;&#41;</p>
+            <img src="../../../../media/images/static/no_music_icon.png" id="album-cover">
 
+            <p class="small colwhite">Your "Now Playing" section updates every 10 seconds.</p>
         </div>
 
         <!--Settings modal-->
@@ -52,21 +55,22 @@
             <h3 class="roboto-slab-500">Account</h3>
             <a href="../"><button class="sign-out b-red general-sans-body">sign out of trackspot</button></a>
 
-            <p class="colwhite general-sans-body">trackspot preview ver1.0<br>this settings menu is unfinished! it will
+            <p class="colwhite general-sans-body">trackspot preview version 1.1<br>this settings menu is unfinished! it will
                 look nicer with javascript :&#41;</p>
+
+            <h3 class="roboto-slab-500">Changelog</h3>
+
+            <strong class="colwhite">Version 1.1</strong>
+            <ul class="colwhite general-sans-body">
+                <li>Spotify API is now working, check your console!</li>
+                <li>Each section is now divided into cards</li>
+                <li>Styling overhauls and this new changelog</li>
+            </ul>
         </div>
 
     </main>
 
-    <script>
-        // SCRIPT NOTICES:
-        // Most of these scripts are not currently made by me. I am continuing to learn javascript and will eventually make my own scripts for this project.
-
-        function toggleStyleSheet() {
-            const link = document.getElementById('main-stylesheet');
-            link.disabled = !link.disabled;
-        }
-    </script>
+    <script src="../scripts/main.js"></script>
 </body>
 
 </html>
