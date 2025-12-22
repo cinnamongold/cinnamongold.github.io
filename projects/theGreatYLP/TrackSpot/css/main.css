@@ -36,7 +36,7 @@ h1 {
 h2 {
     font-size: 2rem;
     margin: none;
-    margin-bottom: -10px;
+    margin-bottom: 0px;
 }
 
 p {
@@ -136,6 +136,21 @@ button {
     text-decoration: underline;
     text-shadow: none;
     margin-left: 2rem;
+}
+
+#song-progress {
+    display: inline;
+    margin-bottom: -15px;
+
+    font-family: monospace;
+    text-shadow: none;
+
+    transition: all 0.2s ease;
+}
+
+#song-progress span {
+    display: inline-block;
+    transition: all 0.2s ease;
 }
 
 #close-settings {
@@ -281,7 +296,6 @@ p {
 
 .large-card:hover {
     width: 51vw;
-    color: rgba(255, 153, 236, 0.418);
 
     transition: all 0.3s ease;
 }
@@ -291,6 +305,12 @@ p {
     border-color: lightpink;
 
     transition: all 0.3s ease;
+}
+
+.large-card:hover span {
+    padding: 0 40px;
+
+    transition: padding 0.4s ease;
 }
 
 #logo:hover {

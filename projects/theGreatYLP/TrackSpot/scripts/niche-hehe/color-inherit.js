@@ -50,8 +50,8 @@ function updateGradientFromImage() {
     ${outerColor} 90%)`;
 }
 
-function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId) {
-    if (trackId && trackId == lastTrackId) {
+function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progressMs, durationMs) {
+    if (trackId && trackId === lastTrackId) {
         document.getElementById('track-title').textContent = name;
         document.getElementById('track-artists').textContent = artists;
         img.src = albumCoverUrl;

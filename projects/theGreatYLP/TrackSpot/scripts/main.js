@@ -133,8 +133,17 @@ async function getCurrentlyPlaying() {
     const artists = item.artists.map(a => a.name).join(', ');
     const albumCoverUrl = item.album.images[0].url;
     const trackId = item.id;
+    const progressMs = data.progress_ms || 0;
+    const durationMs = item.duration_ms;
 
-    updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId)
+    let lastTrackId = null;
+    let currentTimer = null;
+    let currentDurationMs = 0;
+
+    updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progressMs, durationMs)
+
+    //Progress timer function
+    startProgressTimer(progressMs, durationMs);
 }
 
 if (hasCodeInUrl()) {
