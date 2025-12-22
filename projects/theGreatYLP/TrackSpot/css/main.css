@@ -72,6 +72,8 @@ button {
     margin: 1rem;
     width: 50vw;
     height: auto;
+
+    transition: all 0.25s ease;
 }
 
 .b-red {
@@ -122,6 +124,11 @@ button {
 
 .artist-hr {
     width: 50%;
+    margin: none;
+    margin: -15px auto 0 auto;
+    border: 1px solid white;
+
+    transition: all 0.25s ease-out;
 }
 
 .anchor-yeah {
@@ -193,49 +200,6 @@ button {
 #every-10-seconds {
     font-size: 0.75rem;
     text-shadow: none;
-}
-
-/* CHANGE TOP NAV IF ZOOM IS TOO HIGH */
-
-@media (max-width: 500px) {
-    h1 {
-        font-size: 1.5em;
-    }
-
-    h2 {
-        font-size: 1rem;
-    }
-
-    p {
-        font-size: 0.4em;
-    }
-
-    .top-navigation {
-        padding-right: 4em;
-        flex-direction: column;
-    }
-
-    .top-navigation a {
-        font-size: 4px;
-        padding: 0em 0em;
-    }
-
-    .large-card p {
-        font-size: 0.5rem;
-        padding: 5px;
-    }
-
-    .settings-icon {
-        width: 15vw;
-        z-index: 999;
-    }
-
-    #logo {
-        position: absolute;
-        left: 80%;
-        top: 50%;
-        width: 2em;
-    }
 }
 
 /* FX and processing */
@@ -315,6 +279,20 @@ p {
     border: 2px solid rgba(144, 174, 255, 0.86);
 }
 
+.large-card:hover {
+    width: 51vw;
+    color: rgba(255, 153, 236, 0.418);
+
+    transition: all 0.3s ease;
+}
+
+.large-card:hover .artist-hr {
+    width: 75%;
+    border-color: lightpink;
+
+    transition: all 0.3s ease;
+}
+
 #logo:hover {
     transform: scale(1.05);
     transform: rotateZ(5deg);
@@ -324,6 +302,60 @@ p {
 /* Hidden menus on start (ON for now) */
 #settings {
     display: none;
+}
+
+/* CHANGE TOP NAV IF ZOOM IS TOO HIGH */
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.4em;
+    }
+
+    .top-navigation {
+        padding-right: 4em;
+        flex-direction: column;
+    }
+
+    .top-navigation a {
+        font-size: 4px;
+        padding: 0em 0em;
+    }
+
+    .large-card {
+        width: 80vw;
+        margin: 5vh auto;
+    }
+
+    .large-card:hover {
+        width: 80vw;
+        margin: 5vh auto;
+    }
+
+    .large-card p {
+        font-size: 0.5rem;
+        padding: 5px;
+        margin: 1rem auto;
+    }
+
+    .settings-icon {
+        width: 15vw;
+        z-index: 999;
+    }
+
+    #logo {
+        position: absolute;
+        left: 80%;
+        top: 50%;
+        width: 2em;
+    }
 }
 
 /*
