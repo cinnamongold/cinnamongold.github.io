@@ -38,6 +38,7 @@ function getAverageColor(imgE1) {
 
 const albumImg = document.getElementById("album-cover");
 const bgDiv = document.getElementById("now-playing-card");
+const bgDiv2 = document.getElementById("control-card");
 const outerColor = 'rgba(255, 255, 255, 0.25)';
 
 function updateGradientFromImage() {
@@ -45,6 +46,11 @@ function updateGradientFromImage() {
     const centerColor = `rgb(${r},${g},${b})`;
 
     bgDiv.style.backgroundImage = `radial-gradient(circle at 50% 60%,
+    ${centerColor} 0%,
+    ${centerColor} 35%,
+    ${outerColor} 90%)`;
+
+    bgDiv2.style.backgroundImage = `radial-gradient(circle at 50% 60%,
     ${centerColor} 0%,
     ${centerColor} 35%,
     ${outerColor} 90%)`;

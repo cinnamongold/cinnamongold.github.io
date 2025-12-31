@@ -43,6 +43,10 @@ p {
     font-size: 1em;
 }
 
+main {
+    display: inline-flex;
+}
+
 a, a:visited {
     text-decoration: none;
 }
@@ -64,13 +68,14 @@ button {
 
 .large-card {
     background: rgba(255, 255, 255, 0.25);
+    display: block;
     backdrop-filter: blur(8px) saturate(180%);
     
     border: 2px solid rgba(255,250,245,0.5);
     border-radius: 15px;
 
     margin: 1rem;
-    width: 50vw;
+    width: 39vw;
     height: auto;
 
     transition: all 0.25s ease;
@@ -295,7 +300,7 @@ p {
 }
 
 .large-card:hover {
-    width: 51vw;
+    width: 40vw;
 
     transition: all 0.3s ease;
 }
