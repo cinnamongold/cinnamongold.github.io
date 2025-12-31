@@ -69,7 +69,9 @@ button {
 .large-card {
     background: rgba(255, 255, 255, 0.25);
     display: block;
+    position: relative;
     backdrop-filter: blur(8px) saturate(180%);
+    overflow: hidden;
     
     border: 2px solid rgba(255,250,245,0.5);
     border-radius: 15px;
@@ -143,6 +145,22 @@ button {
     margin-left: 2rem;
 }
 
+.coming-soon-container {
+    position: relative;
+    margin: 1rem auto;
+}
+
+.coming-soon-icon {
+    width: 2rem;
+}
+
+.coming-soon-text {
+    position: absolute;
+    top: 0.5rem;
+    margin-left: 1rem;
+    font-size: 0.75rem;
+}
+
 #song-progress {
     display: inline;
     margin-bottom: -15px;
@@ -156,6 +174,18 @@ button {
 #song-progress span {
     display: inline-block;
     transition: all 0.2s ease;
+}
+
+#album-cover-background {
+    position: absolute;
+    left: 0;
+    width: auto;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -100;
+
+    opacity: 0.1;
+    filter: blur(10px) brightness(50%) sepia(0.5);
 }
 
 #close-settings {
@@ -312,7 +342,7 @@ p {
     transition: all 0.3s ease;
 }
 
-.large-card:hover span {
+#now-playing-card:hover span {
     padding: 0 40px;
 
     transition: padding 0.4s ease;
@@ -342,6 +372,10 @@ p {
 
     p {
         font-size: 0.4em;
+    }
+
+    main {
+        display: block;
     }
 
     .top-navigation {

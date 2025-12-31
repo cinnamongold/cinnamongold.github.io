@@ -1,5 +1,6 @@
 const card = document.getElementById("now-playing-card");
 const img = document.getElementById("album-cover");
+const img2 = document.getElementById("album-cover-background");
 const statusText = document.getElementById("status-text");
 
 function escapeHtml(text) {
@@ -37,6 +38,7 @@ function getAverageColor(imgE1) {
 }
 
 const albumImg = document.getElementById("album-cover");
+const albumImg2 = document.getElementById("album-cover-background");
 const bgDiv = document.getElementById("now-playing-card");
 const bgDiv2 = document.getElementById("control-card");
 const outerColor = 'rgba(255, 255, 255, 0.25)';
@@ -61,6 +63,7 @@ function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progress
         document.getElementById('track-title').textContent = name;
         document.getElementById('track-artists').textContent = artists;
         img.src = albumCoverUrl;
+        img2.src = albumCoverUrl;
         return;
     }
 
@@ -68,15 +71,23 @@ function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progress
 
     statusText.style.opacity = '0';
     img.style.opacity = '0';
+    img2.style.opacity = '0';
 
     setTimeout(() => {
         document.getElementById('track-title').textContent = name;
         document.getElementById('track-artists').textContent = artists;
         img.src = albumCoverUrl;
+        img2.src = albumCoverUrl;
 
         img.onload = () => {
             statusText.style.opacity = '1';
             img.style.opacity = '1';
+            updateGradientFromImage();
+        };
+
+        img2.onload = () => {
+            statusText.style.opacity = '1';
+            img2.style.opacity = '1';
             updateGradientFromImage();
         };
     }, 200);
