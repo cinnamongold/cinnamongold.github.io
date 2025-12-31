@@ -29,7 +29,7 @@ document.getElementById('spotify-login').addEventListener('click', async functio
     const selected = document.querySelector('input[name="login-type"]:checked');
     const redirectUri = selected ? selected.value : null;
     localStorage.setItem('redirect_uri', redirectUri);
-    const scope = 'user-read-playback-state user-read-currently-playing';  // Separated by spaces if multiple scopes are needed
+    const scope = 'user-read-playback-state user-read-currently-playing user-modify-playback-state';  // Separated by spaces if multiple scopes are needed
     const state = generateRandomString(16);
 
     const authUrl = `https://accounts.spotify.com/authorize?` +
