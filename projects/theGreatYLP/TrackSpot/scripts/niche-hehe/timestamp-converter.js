@@ -27,7 +27,6 @@ function startProgressTimer(startMs, durationMs) {
     currentTimer = setInterval(() => {
         progressMs += 1000;
         if (progressMs >= durationMs) {
-            stopTimer();
             document.getElementById('song-progress').textContent = msToMmSs(durationMs);
             return;
         }
