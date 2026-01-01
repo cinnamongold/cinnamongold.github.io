@@ -135,7 +135,7 @@ async function getCurrentlyPlaying() {
 
     if (!response.ok) {
         console.error("Error from spotify:", response.status, await response.text());
-        document.getElementById("status-text").innerHTML = `We aren't getting any music! Make sure you're listening online and you're not in a private session.`
+        document.getElementById("status-text").innerHTML = `ERROR: Try signing in again.`;
         return;
     }
 
