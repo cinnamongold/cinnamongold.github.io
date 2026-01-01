@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+    <!--important, reload page once on entry-->
+    <script>
+        if (localStorage.getItem('page_reloaded') !== 'true') {
+            localStorage.setItem('page_reloaded', 'true');
+            location.reload();
+        } else {
+            localStorage.removeItem('page_reloaded');
+        }
+    </script>
+
     <!--Social media meta tags-->
     <meta property="og:title" content="TRACKSPOT by nico" />
     <meta property="og:description" content="Track your music and listening stats year-round with TrackSpot!" />
@@ -50,10 +60,10 @@
             <img src="../../../../media/images/static/no_music_icon.png" alt="album cover" id="album-cover-background" crossorigin="anonymous">
             <h2 class="outline">Music Control</h2>
 
-            <p class="colwhite coming-soon-container" id="play-pause"><img src="../../../../media/svg/calendar-clock.svg" class="coming-soon-icon"><span class="coming-soon-text">Coming soon</span></p>
-            <p class="colwhite coming-soon-container" id="play-pause"><img src="../../../../media/svg/calendar-clock.svg" class="coming-soon-icon"><span class="coming-soon-text">Coming soon</span></p>
-            <p class="colwhite coming-soon-container" id="play-pause"><img src="../../../../media/svg/calendar-clock.svg" class="coming-soon-icon"><span class="coming-soon-text">Coming soon</span></p>
-            <p class="colwhite coming-soon-container" id="play-pause"><img src="../../../../media/svg/calendar-clock.svg" class="coming-soon-icon"><span class="coming-soon-text">Coming soon</span></p>
+            <div class="colwhite control-container" id="play-pause"><span class="control-text">Control features soon!</span></div><br>
+            <div class="colwhite control-container" id=""><button class="control-text b-blue"><img class="control-button-icon" src="../../../../media/svg/play-pause-svgrepo.svg"></button></div>
+            <div class="colwhite control-container" id=""><button class="control-text b-red"><img class="control-button-icon" src="../../../../media/svg/skip-icon-svgrepo.svg"></button></div>
+            <div class="colwhite control-container" id=""><button class="control-text b-red"><img class="control-button-icon" src="../../../../media/svg/previous-icon-svgrepo.svg"></button></div>
         </div>
 
         <!--Settings modal-->
@@ -69,17 +79,8 @@
             <h3 class="roboto-slab-500">Account</h3>
             <a href="../"><button class="sign-out b-red general-sans-body">sign out of trackspot</button></a>
 
-            <p class="colwhite general-sans-body">trackspot preview version 1.1<br>this settings menu is unfinished! it will
+            <p class="colwhite general-sans-body">trackspot preview version 1.2<br>this settings menu is unfinished! it will
                 look nicer with javascript :&#41;</p>
-
-            <h3 class="roboto-slab-500">Changelog</h3>
-
-            <strong class="colwhite">Version 1.1</strong>
-            <ul class="colwhite general-sans-body">
-                <li>Spotify API is now working, check your console!</li>
-                <li>Each section is now divided into cards</li>
-                <li>Styling overhauls and this new changelog</li>
-            </ul>
         </div>
 
     </main>

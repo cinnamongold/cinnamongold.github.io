@@ -145,18 +145,18 @@ button {
     margin-left: 2rem;
 }
 
-.coming-soon-container {
+.control-container {
     position: relative;
+    display: inline-flex;
+    align-items: center;
     margin: 1rem auto;
 }
 
-.coming-soon-icon {
+.control-button-icon { 
     width: 2rem;
 }
 
-.coming-soon-text {
-    position: absolute;
-    top: 0.5rem;
+.control-text {
     margin-left: 1rem;
     font-size: 0.75rem;
 }
@@ -185,7 +185,7 @@ button {
     z-index: -100;
 
     opacity: 0.1;
-    filter: blur(10px) brightness(50%) sepia(0.5);
+    filter: blur(10px) brightness(80%);
 }
 
 #close-settings {
