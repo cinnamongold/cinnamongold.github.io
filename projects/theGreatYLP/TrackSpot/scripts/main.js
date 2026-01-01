@@ -111,9 +111,14 @@ async function getCurrentlyPlaying() {
 
     if (response.status === 204) {
         console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = `We aren't getting any music! Make sure you're listening online and you're not in a private session.`
+        document.getElementById("status-text").innerHTML = `Your session has expired. Signing out...`;
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
+
+        setTimeout(() => {
+            window.location.reload();
+            return;
+        }, 500)
         return;
     }
 
