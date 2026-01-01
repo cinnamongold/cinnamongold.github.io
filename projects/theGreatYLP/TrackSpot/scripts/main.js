@@ -90,6 +90,12 @@ getUserCode();
 let lastTrackId = null;
 
 async function getCurrentlyPlaying() {
+    const reload_attempted = localStorage.getItem('reload_attempted');
+    if (reload_attempted === 'true') {
+        localStorage.removeItem('reload_attempted');
+        window.location.href = "https://cinnamongold.github.io/projects/theGreatYLP/TrackSpot/";
+    }
+
     const token = localStorage.getItem('access_token');
     if (!token) {
         console.error("getCurrentlyPlaying: Error. No access token is available in local storage.");
@@ -113,8 +119,12 @@ async function getCurrentlyPlaying() {
 
     if (response.status === 401) {
         console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = `We're retrieving your music. If this takes too long, try logging out in the settings panel.`
-        return;
+        document.getElementById("status-text").innerHTML = `We're retrieving your music. Please hold on while we troubleshoot for you, or <a href="../">log out</a>.`
+        localStorage.setItem('reload_attempted', 'true');
+        
+        setTimeout(() => {
+            window.location.reload();
+        }, 500)
     }
 
     if (!response.ok) {
