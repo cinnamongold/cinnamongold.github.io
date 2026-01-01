@@ -124,6 +124,7 @@ async function getCurrentlyPlaying() {
         
         setTimeout(() => {
             window.location.reload();
+            return;
         }, 500)
     }
 
