@@ -7,7 +7,9 @@ def copy_before_final_equals(line):
     last_equals = line.rfind("=")
     if last_equals == -1:
         return line.strip()
-    return line[:last_equals].strip()
+    text = line[:last_equals].strip()
+    text = text.replace(" + ", "\n")
+    return text
 
 def main():
     with open(filename, "r", encoding="utf-8") as file:
