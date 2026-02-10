@@ -2,6 +2,9 @@
 // Most of these scripts are not currently made by me. I am continuing to learn javascript and will eventually make my own scripts for this project.
 
 // generate a PKCE "helper" code, get the user code,  and trade it for an actual auth token
+
+let currentUrl = window.location.href;
+
 const generateRandomString = (length) => {
     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
     const values = crypto.getRandomValues(new Uint8Array(length));
@@ -90,17 +93,23 @@ getUserCode();
 let lastTrackId = null;
 
 async function getCurrentlyPlaying() {
+    // Send back the user if a refresh has already been attempted
+
     const reload_attempted = localStorage.getItem('reload_attempted');
-    if (reload_attempted === 'true') {
+    if (reload_attempted === 'true' && currentUrl.includes("127.0.0.1") == false) {
         localStorage.removeItem('reload_attempted');
         window.location.href = "https://cinnamongold.github.io/projects/theGreatYLP/TrackSpot/";
     }
+
+    // Check for a token. If there is none, return error and try refreshing
 
     const token = localStorage.getItem('access_token');
     if (!token) {
         console.error("getCurrentlyPlaying: Error. No access token is available in local storage.");
         return;
     }
+
+    // Get user's currently playing from the Spotify API using a Bearer auth token
 
     const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
         method: "GET",
@@ -109,6 +118,9 @@ async function getCurrentlyPlaying() {
         }
     });
 
+    // Check for response status and return based on status CODE
+
+    // Session timeout response
     if (response.status === 204) {
         console.log("Nothing is currently playing.");
         document.getElementById("status-text").innerHTML = `Your session has expired. Signing out...`;
@@ -122,6 +134,7 @@ async function getCurrentlyPlaying() {
         return;
     }
 
+    // No music playing response
     if (response.status === 401) {
         console.log("Nothing is currently playing.");
         document.getElementById("status-text").innerHTML = `We're retrieving your music. Please hold on while we troubleshoot for you, or <a href="../">log out</a>.`
@@ -133,12 +146,16 @@ async function getCurrentlyPlaying() {
         }, 500)
     }
 
+    // Cases where response is NOT OK
     if (!response.ok) {
         console.error("Error from spotify:", response.status, await response.text());
         document.getElementById("status-text").innerHTML = `ERROR: Try signing in again.`;
         return;
     }
 
+    // Fetch data, where data is an array of URIs so that the information can be
+    // sent and displayed via HTML
+    
     const data = await response.json();
     console.log("Currently playing music. Display raw data:", data);
 
