@@ -22,6 +22,7 @@ document.getElementById('spotify-login').addEventListener('click', async functio
 
     const codeVerifier = generateRandomString(64);
     localStorage.setItem('code_verifier', codeVerifier);
+    sessionStorage.setItem('code_verifier', codeVerifier);
     const hashed = await sha256(codeVerifier);
     const codeChallenge = base64encode(hashed);
 
@@ -29,8 +30,11 @@ document.getElementById('spotify-login').addEventListener('click', async functio
     const selected = document.querySelector('input[name="login-type"]:checked');
     const redirectUri = selected ? selected.value : null;
     localStorage.setItem('redirect_uri', redirectUri);
+    sessionStorage.setItem('redirect_uri', redirectUri);
     const scope = 'user-read-playback-state user-read-currently-playing user-modify-playback-state';  // Separated by spaces if multiple scopes are needed
     const state = generateRandomString(16);
+    localStorage.setItem('oauth_state', state);
+    sessionStorage.setItem('oauth_state', state);
 
     const authUrl = `https://accounts.spotify.com/authorize?` +
         `client_id=${encodeURIComponent(clientId)}` +

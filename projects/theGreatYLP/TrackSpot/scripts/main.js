@@ -3,7 +3,9 @@
 
 // generate a PKCE "helper" code, get the user code,  and trade it for an actual auth token
 
-let currentUrl = window.location.href;
+const SPOTIFY_CLIENT_ID = "3876dfbb34e04fbdb28027a22c38a557";
+const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
+const SPOTIFY_NOW_PLAYING_URL = "https://api.spotify.com/v1/me/player/currently-playing";
 
 const generateRandomString = (length) => {
     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
@@ -26,40 +28,70 @@ function toggleStyleSheet() {
     link.disabled = !link.disabled;
 };
 
+function getStoredItem(key) {
+    return localStorage.getItem(key) || sessionStorage.getItem(key);
+}
+
+function setStoredItem(key, value) {
+    localStorage.setItem(key, value);
+    sessionStorage.setItem(key, value);
+}
+
+function removeStoredItem(key) {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+}
+
+function setStatusText(message, allowHtml = false) {
+    const status = document.getElementById("status-text");
+    if (!status) return;
+
+    if (allowHtml) {
+        status.innerHTML = message;
+    } else {
+        status.textContent = message;
+    }
+}
+
 function getUserCode() {
     const urlParams = new URLSearchParams(window.location.search);
     const userCode = urlParams.get('code');
     const error = urlParams.get('error');
 
+    if (error) {
+        console.error("Spotify auth error:", error);
+        setStatusText("Spotify login failed. Please sign in again.");
+        return;
+    }
+
     if (userCode) {
         console.log('User Code:', userCode);
-        if (userCode) localStorage.setItem('spotify_code', userCode);
+        setStoredItem('spotify_code', userCode);
     } else {
         console.log("No user code found.")
     }
 };
 
 async function exchangeCodeForToken() {
-    const code = localStorage.getItem('spotify_code');
-    const codeVerifier = localStorage.getItem('code_verifier');
-    const redirectUri = localStorage.getItem('redirect_uri');
+    const code = getStoredItem('spotify_code');
+    const codeVerifier = getStoredItem('code_verifier');
+    const redirectUri = getStoredItem('redirect_uri');
 
-    if (!code || !codeVerifier) {
+    if (!code || !codeVerifier || !redirectUri) {
         console.error("Missing code or code verifier");
-        return
+        setStatusText("Login context expired. Please sign in again.");
+        return false;
     }
 
-    const tokenUrl = "https://accounts.spotify.com/api/token";
-
     const body = new URLSearchParams({
-        client_id: "3876dfbb34e04fbdb28027a22c38a557",
+        client_id: SPOTIFY_CLIENT_ID,
         grant_type: "authorization_code",
         code: code,
         redirect_uri: redirectUri,
         code_verifier: codeVerifier
     });
 
-    const response = await fetch(tokenUrl, {
+    const response = await fetch(SPOTIFY_TOKEN_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body
@@ -68,14 +100,56 @@ async function exchangeCodeForToken() {
     const data = await response.json();
     console.log('Token response:', data);
 
-    if (data.access_token) {
-        localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('refresh_token', data.refresh_token || '');
-        localStorage.removeItem('spotify_code');
+    if (response.ok && data.access_token) {
+        setStoredItem('access_token', data.access_token);
+        if (data.refresh_token) {
+            setStoredItem('refresh_token', data.refresh_token);
+        }
+        removeStoredItem('spotify_code');
         console.log("Access token retrieved and saved to local storage");
+        return true;
     } else {
         console.error("Failed to get token", data);
+        setStatusText("Unable to complete login. Please sign in again.");
+        return false;
     }
+}
+
+async function refreshAccessToken() {
+    const refreshToken = getStoredItem('refresh_token');
+
+    if (!refreshToken) {
+        console.warn("No refresh token available.");
+        return false;
+    }
+
+    const body = new URLSearchParams({
+        client_id: SPOTIFY_CLIENT_ID,
+        grant_type: "refresh_token",
+        refresh_token: refreshToken
+    });
+
+    const response = await fetch(SPOTIFY_TOKEN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.access_token) {
+        setStoredItem('access_token', data.access_token);
+        if (data.refresh_token) {
+            setStoredItem('refresh_token', data.refresh_token);
+        }
+        console.log("Access token refreshed.");
+        return true;
+    }
+
+    console.error("Failed to refresh token", data);
+    removeStoredItem('access_token');
+    removeStoredItem('refresh_token');
+    return false;
 }
 
 function hasCodeInUrl() {
@@ -92,105 +166,81 @@ getUserCode();
 
 let lastTrackId = null;
 
-async function getCurrentlyPlaying() {
-    // Send back the user if a refresh has already been attempted
-
-    const reload_attempted = localStorage.getItem('reload_attempted');
-    if (reload_attempted === 'true' && currentUrl.includes("127.0.0.1") == false) {
-        localStorage.removeItem('reload_attempted');
-        window.location.href = "https://cinnamongold.github.io/projects/theGreatYLP/TrackSpot/";
-    }
-
-    // Check for a token. If there is none, return error and try refreshing
-
-    const token = localStorage.getItem('access_token');
+async function getCurrentlyPlaying(retryOnAuthError = true) {
+    const token = getStoredItem('access_token');
     if (!token) {
-        console.error("getCurrentlyPlaying: Error. No access token is available in local storage.");
+        if (retryOnAuthError && await refreshAccessToken()) {
+            return getCurrentlyPlaying(false);
+        }
+
+        console.error("getCurrentlyPlaying: no access token is available.");
+        setStatusText("Your session expired. Please sign in again.");
         return;
     }
 
-    // Get user's currently playing from the Spotify API using a Bearer auth token
-
-    const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
+    const response = await fetch(SPOTIFY_NOW_PLAYING_URL, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`
         }
     });
 
-    // Check for response status and return based on status CODE
-
-    // Session timeout response
     if (response.status === 204) {
-        console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = `Your session has expired. Signing out...`;
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-
-        setTimeout(() => {
-            window.location.reload();
-            return;
-        }, 500)
+        setStatusText("Nothing is currently playing right now.");
         return;
     }
 
-    // No music playing response
     if (response.status === 401) {
-        console.log("Nothing is currently playing.");
-        document.getElementById("status-text").innerHTML = `We're retrieving your music. Please hold on while we troubleshoot for you, or <a href="../">log out</a>.`
-        localStorage.setItem('reload_attempted', 'true');
-        
-        setTimeout(() => {
-            window.location.reload();
-            return;
-        }, 500)
+        if (retryOnAuthError && await refreshAccessToken()) {
+            return getCurrentlyPlaying(false);
+        }
+
+        setStatusText(`Your session expired. Please <a href="../">sign in again</a>.`, true);
+        return;
     }
 
-    // Cases where response is NOT OK
     if (!response.ok) {
         console.error("Error from spotify:", response.status, await response.text());
-        document.getElementById("status-text").innerHTML = `ERROR: Try signing in again.`;
+        setStatusText("Could not load your currently playing track.");
         return;
     }
 
-    // Fetch data, where data is an array of URIs so that the information can be
-    // sent and displayed via HTML
-    
     const data = await response.json();
     console.log("Currently playing music. Display raw data:", data);
 
-    // Update actual HTML and stuff based on now playing
+    if (!data || !data.item) {
+        setStatusText("Nothing is currently playing right now.");
+        return;
+    }
 
     const item = data.item;
-    const name = data.item.name;
+    const name = item.name;
     const artists = item.artists.map(a => a.name).join(', ');
     const albumCoverUrl = item.album.images[0].url;
     const trackId = item.id;
     const progressMs = data.progress_ms || 0;
     const durationMs = item.duration_ms;
 
-    let lastTrackId = null;
-    let currentTimer = null;
-    let currentDurationMs = 0;
-
     updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progressMs, durationMs)
-
-    //Progress timer function
     startProgressTimer(progressMs, durationMs);
 }
 
-if (hasCodeInUrl()) {
-    exchangeCodeForToken().then(() => {
+async function initializeNowPlaying() {
+    if (hasCodeInUrl()) {
+        await exchangeCodeForToken();
         clearUrlParams();
-    });
-} else {
-    console.log('No new code in URL, not calling /api/token again');
+    } else {
+        console.log('No new code in URL, not calling /api/token again');
+    }
+
+    if (getStoredItem('access_token') || getStoredItem('refresh_token')) {
+        await getCurrentlyPlaying();
+        setInterval(() => {
+            getCurrentlyPlaying();
+        }, 10000)
+    } else {
+        setStatusText(`No active session. Please <a href="../">sign in</a>.`, true);
+    }
 }
 
-if (localStorage.getItem('access_token')) {
-    getCurrentlyPlaying();
-
-    setInterval(() => {
-        getCurrentlyPlaying();
-    }, 10000)
-}
+initializeNowPlaying();
