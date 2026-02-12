@@ -45,19 +45,31 @@
             <p class="small colwhite" id="every-10-seconds">Your "Now Playing" section updates every 5 seconds.</p>
         </div>
 
-        <!--(Changed from prev. iteration) QuickStats card-->
-        <div class="large-card collapsible-card" id="control-card">
-            <img src="../../../../media/images/static/no_music_icon.png" alt="album cover" id="album-cover-background" crossorigin="anonymous">
-            <h2 class="outline">Your stats today</h2>
-            <p class="small colwhite"></p>
+        <div class="collapsible-stack" id="right-card-stack">
+            <!--(Changed from prev. iteration) QuickStats card-->
+            <div class="large-card collapsible-card" id="control-card">
+                <img src="../../../../media/images/static/no_music_icon.png" alt="album cover" id="album-cover-background" crossorigin="anonymous">
+                <h2 class="outline">Your stats today</h2>
+                <p class="small colwhite"></p>
 
-            <ul class="stats-list">
-                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Minutes streamed</span><span class="stat-cat-element" id="minutesStreamedToday">0</span></li>
-                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Tracks streamed</span><span class="stat-cat-element" id="tracksStreamedToday">0</span></li>
-                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Unique artists</span><span class="stat-cat-element" id="uniqueArtistsToday">0</span></li>
-                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Top artist</span><span class="stat-cat-element" id="topArtistToday">-</span></li>
-            </ul>
+                <ul class="stats-list">
+                    <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Minutes streamed</span><span class="stat-cat-element" id="minutesStreamedToday">0</span></li>
+                    <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Tracks streamed</span><span class="stat-cat-element" id="tracksStreamedToday">0</span></li>
+                    <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Unique artists</span><span class="stat-cat-element" id="uniqueArtistsToday">0</span></li>
+                    <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Top artist</span><span class="stat-cat-element" id="topArtistToday">-</span></li>
+                </ul>
+            </div>
 
+            <!--Quickly access information about a song-->
+            <div class="large-card collapsible-card" id="track-info-card">
+                <h2 class="outline">About this track</h2>
+                <p class="small colwhite"></p>
+
+                <ul class="stats-list">
+                    <button class="b-blue general-sans-body">View <span id="artist-name"></span>'s profile ↗</button><br>
+                    <button class="b-blue general-sans-body">View the <span id="album-name"></span> album ↗</button>
+                </ul>
+            </div>
         </div>
 
         <!--Settings modal-->
@@ -73,7 +85,7 @@
             <h3 class="roboto-slab-500">Account</h3>
             <a><button onclick="javascript:signOutUser();" class="sign-out b-red general-sans-body">sign out of trackspot</button></a>
 
-            <p class="colwhite general-sans-body">TrackSpot Frontend Version 1.3<br>this settings menu is unfinished! it will
+            <p class="colwhite general-sans-body">TrackSpot Frontend Version 1.4<br>this settings menu is unfinished! it will
                 look nicer with javascript :&#41;</p>
         </div>
 

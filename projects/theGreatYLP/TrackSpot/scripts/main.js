@@ -285,37 +285,46 @@ function updateTodayStatsFromPlayback(data) {
 
 let collapsibleResizeBound = false;
 let collapsibleResizeObserver = null;
-const CARD_CONTENT_FADE_MS = 2500;
+const CARD_CONTENT_FADE_MS = 300;
 const collapsibleFinalizeTimers = new WeakMap();
+const COLLAPSED_CARD_RATIO = 0.25;
 
 function syncCollapsibleCardExpandedHeights() {
-    const cards = document.querySelectorAll(".collapsible-card");
-    if (!cards.length) return;
+    const stacks = document.querySelectorAll(".collapsible-stack");
+    if (!stacks.length) return;
 
     const isStackedLayout = window.matchMedia("(max-width: 500px)").matches;
+    const nowPlayingCard = document.getElementById("now-playing-card");
+    const nowPlayingHeight = nowPlayingCard ? Math.ceil(nowPlayingCard.getBoundingClientRect().height) : 0;
 
-    cards.forEach((card) => {
+    stacks.forEach((stack) => {
+        const cards = Array.from(stack.querySelectorAll(".collapsible-card"));
+        if (!cards.length) return;
+
         if (isStackedLayout) {
-            card.style.removeProperty("--expanded-card-height");
+            stack.style.setProperty("--stack-height", "auto");
+            cards.forEach((card) => {
+                card.style.removeProperty("--expanded-card-height");
+            });
             return;
         }
 
-        const parent = card.parentElement;
-        if (!parent) return;
+        const stackHeight = nowPlayingHeight > 0 ? nowPlayingHeight : Math.ceil(stack.getBoundingClientRect().height);
+        if (!stackHeight) return;
 
-        const siblingCards = Array.from(parent.querySelectorAll(".large-card"))
-            .filter((candidate) => candidate !== card);
+        const stackStyles = window.getComputedStyle(stack);
+        const rowGapRaw = stackStyles.rowGap && stackStyles.rowGap !== "normal" ? stackStyles.rowGap : stackStyles.gap;
+        const gap = Number.parseFloat(rowGapRaw) || 0;
+        const totalGap = gap * Math.max(0, cards.length - 1);
 
-        if (!siblingCards.length) return;
+        const denominator = 1 + COLLAPSED_CARD_RATIO * Math.max(0, cards.length - 1);
+        const expandedHeight = Math.max(120, Math.floor((stackHeight - totalGap) / denominator));
 
-        const siblingHeights = siblingCards
-            .map((candidate) => Math.ceil(candidate.getBoundingClientRect().height))
-            .filter((height) => height > 0);
+        stack.style.setProperty("--stack-height", `${stackHeight}px`);
 
-        if (!siblingHeights.length) return;
-
-        const targetHeight = Math.max(...siblingHeights);
-        card.style.setProperty("--expanded-card-height", `${targetHeight}px`);
+        cards.forEach((card) => {
+            card.style.setProperty("--expanded-card-height", `${expandedHeight}px`);
+        });
     });
 }
 
@@ -358,26 +367,37 @@ function setCardCollapsedState(card, shouldCollapse) {
 }
 
 function initializeCollapsibleCards() {
-    const cards = document.querySelectorAll(".collapsible-card");
-    if (!cards.length) return;
+    const stacks = document.querySelectorAll(".collapsible-stack");
+    if (!stacks.length) return;
 
-    cards.forEach((card) => {
-        let toggle = card.querySelector(".collapse-toggle");
-        if (!toggle) {
-            toggle = document.createElement("button");
-            toggle.type = "button";
-            toggle.className = "collapse-toggle";
-            toggle.setAttribute("aria-label", "Toggle card");
-            toggle.textContent = ">";
-            card.appendChild(toggle);
-        }
+    stacks.forEach((stack) => {
+        const cards = Array.from(stack.querySelectorAll(".collapsible-card"));
+        if (!cards.length) return;
 
-        setCardCollapsedState(card, card.classList.contains("is-collapsed"));
+        cards.forEach((card) => {
+            let toggle = card.querySelector(".collapse-toggle");
+            if (!toggle) {
+                toggle = document.createElement("button");
+                toggle.type = "button";
+                toggle.className = "collapse-toggle";
+                toggle.setAttribute("aria-label", "Toggle card");
+                toggle.textContent = ">";
+                card.appendChild(toggle);
+            }
 
-        toggle.addEventListener("click", () => {
-            const isCollapsedState = card.classList.contains("is-collapsed") || card.classList.contains("is-collapsing");
-            const shouldCollapse = !isCollapsedState;
-            setCardCollapsedState(card, shouldCollapse);
+            toggle.addEventListener("click", () => {
+                const isActive = !card.classList.contains("is-collapsed") && !card.classList.contains("is-collapsing");
+                if (isActive) return;
+
+                cards.forEach((otherCard) => {
+                    setCardCollapsedState(otherCard, otherCard !== card);
+                });
+            });
+        });
+
+        const initiallyOpen = cards.find((card) => !card.classList.contains("is-collapsed") && !card.classList.contains("is-collapsing")) || cards[0];
+        cards.forEach((card) => {
+            setCardCollapsedState(card, card !== initiallyOpen);
         });
     });
 

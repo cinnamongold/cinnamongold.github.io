@@ -43,6 +43,10 @@ p {
     font-size: 1em;
 }
 
+:root {
+    --card-column-width: 39vw;
+}
+
 main {
     display: inline-flex;
     align-items: flex-start;
@@ -136,6 +140,21 @@ button {
     text-align: center;
 }
 
+.collapsible-stack {
+    --stack-height: auto;
+    width: var(--card-column-width);
+    height: var(--stack-height);
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.collapsible-stack > .large-card {
+    width: 100%;
+    margin: 0;
+}
+
 .small {
     font-size: 0.75rem;
 }
@@ -151,10 +170,14 @@ button {
     border-radius: 15px;
 
     margin: 1rem;
-    width: 39vw;
+    width: var(--card-column-width);
     height: auto;
 
     transition: all 0.25s ease;
+}
+
+.large-card button {
+    margin: 0.5rem;
 }
 
 .collapsible-card {
@@ -163,7 +186,7 @@ button {
     min-height: var(--expanded-card-height);
     max-height: var(--expanded-card-height);
     overflow: hidden;
-    transition: max-height 2500ms cubic-bezier(0.22, 1, 0.36, 1), min-height 2500ms cubic-bezier(0.22, 1, 0.36, 1), padding 2500ms cubic-bezier(0.22, 1, 0.36, 1), background 2500ms ease-out;
+    transition: max-height 300ms cubic-bezier(0.22, 1, 0.36, 1), min-height 300ms cubic-bezier(0.22, 1, 0.36, 1), padding 300ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease-out;
 }
 
 .collapse-toggle {
@@ -199,7 +222,7 @@ button {
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.25) !important;
     background-image: none !important;
-    transition: max-height 2500ms cubic-bezier(0.55, 0.06, 0.68, 0.19), min-height 2500ms cubic-bezier(0.55, 0.06, 0.68, 0.19), padding 2500ms cubic-bezier(0.55, 0.06, 0.68, 0.19), background 2500ms ease-in;
+    transition: max-height 300ms cubic-bezier(0.55, 0.06, 0.68, 0.19), min-height 300ms cubic-bezier(0.55, 0.06, 0.68, 0.19), padding 300ms cubic-bezier(0.55, 0.06, 0.68, 0.19), background 300ms ease-in;
 }
 
 .collapsible-card.is-collapsing h2,
@@ -222,23 +245,23 @@ button {
 
 .collapsible-card > *:not(h2):not(.collapse-toggle):not(img) {
     opacity: 1;
-    transition: opacity 1250ms ease-out;
+    transition: opacity 300ms ease-out;
 }
 
 .collapsible-card > img:not(.collapse-toggle) {
-    transition: opacity 2500ms ease-out;
+    transition: opacity 300ms ease-out;
 }
 
 .collapsible-card.is-collapsing > *:not(h2):not(.collapse-toggle):not(img),
 .collapsible-card.is-collapsed > *:not(h2):not(.collapse-toggle):not(img) {
     opacity: 0;
     pointer-events: none;
-    transition: opacity 1250ms ease-in;
+    transition: opacity 300ms ease-in;
 }
 
 .collapsible-card.is-collapsing > img:not(.collapse-toggle),
 .collapsible-card.is-collapsed > img:not(.collapse-toggle) {
-    transition: opacity 2500ms ease-in;
+    transition: opacity 300ms ease-in;
 }
 
 .collapsible-card.is-collapsed > *:not(h2):not(.collapse-toggle):not(img) {
@@ -528,9 +551,13 @@ p {
 }
 
 .large-card:hover {
-    width: 40vw;
+    width: var(--card-column-width);
 
     transition: all 0.3s ease;
+}
+
+.collapsible-stack .large-card:hover {
+    width: 100%;
 }
 
 .collapsible-card.is-collapsed:hover {
@@ -591,12 +618,12 @@ p {
     }
 
     .large-card {
-        width: 80vw;
+        width: var(--card-column-width);
         margin: 5vh auto;
     }
 
     .large-card:hover {
-        width: 80vw;
+        width: var(--card-column-width);
         margin: 5vh auto;
     }
 
@@ -613,6 +640,14 @@ p {
 
     .collapsible-card {
         --expanded-card-height: 20rem;
+    }
+
+    .collapsible-stack {
+        --card-column-width: 80vw;
+        width: var(--card-column-width);
+        height: auto;
+        margin: 5vh auto;
+        gap: 5vh;
     }
 
     .settings-icon {
