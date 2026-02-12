@@ -221,6 +221,8 @@ function renderTodayStats() {
     if (tracksElement) animateStatNumber(tracksElement, tracks);
     if (uniqueArtistsElement) animateStatNumber(uniqueArtistsElement, uniqueArtists);
     if (topArtistElement) topArtistElement.textContent = topArtist;
+
+    syncCollapsibleCardExpandedHeights();
 }
 
 function updateTodayStatsFromPlayback(data) {
@@ -279,6 +281,126 @@ function updateTodayStatsFromPlayback(data) {
 
     saveTodayStats(stats);
     renderTodayStats();
+}
+
+let collapsibleResizeBound = false;
+let collapsibleResizeObserver = null;
+const CARD_CONTENT_FADE_MS = 2500;
+const collapsibleFinalizeTimers = new WeakMap();
+
+function syncCollapsibleCardExpandedHeights() {
+    const cards = document.querySelectorAll(".collapsible-card");
+    if (!cards.length) return;
+
+    const isStackedLayout = window.matchMedia("(max-width: 500px)").matches;
+
+    cards.forEach((card) => {
+        if (isStackedLayout) {
+            card.style.removeProperty("--expanded-card-height");
+            return;
+        }
+
+        const parent = card.parentElement;
+        if (!parent) return;
+
+        const siblingCards = Array.from(parent.querySelectorAll(".large-card"))
+            .filter((candidate) => candidate !== card);
+
+        if (!siblingCards.length) return;
+
+        const siblingHeights = siblingCards
+            .map((candidate) => Math.ceil(candidate.getBoundingClientRect().height))
+            .filter((height) => height > 0);
+
+        if (!siblingHeights.length) return;
+
+        const targetHeight = Math.max(...siblingHeights);
+        card.style.setProperty("--expanded-card-height", `${targetHeight}px`);
+    });
+}
+
+function setCardCollapsedState(card, shouldCollapse) {
+    const existingTimer = collapsibleFinalizeTimers.get(card);
+    if (existingTimer) {
+        clearTimeout(existingTimer);
+        collapsibleFinalizeTimers.delete(card);
+    }
+
+    syncCollapsibleCardExpandedHeights();
+
+    if (shouldCollapse) {
+        card.classList.add("is-collapsing");
+        card.classList.remove("is-collapsed");
+    } else {
+        card.classList.remove("is-collapsing");
+        card.classList.remove("is-collapsed");
+    }
+
+    const toggle = card.querySelector(".collapse-toggle");
+    if (toggle) {
+        toggle.setAttribute("aria-expanded", shouldCollapse ? "false" : "true");
+        toggle.setAttribute("title", shouldCollapse ? "Expand card" : "Collapse card");
+    }
+
+    if (shouldCollapse) {
+        const finalizeTimer = setTimeout(() => {
+            card.classList.remove("is-collapsing");
+            card.classList.add("is-collapsed");
+            collapsibleFinalizeTimers.delete(card);
+            syncCollapsibleCardExpandedHeights();
+        }, CARD_CONTENT_FADE_MS);
+        collapsibleFinalizeTimers.set(card, finalizeTimer);
+    }
+
+    requestAnimationFrame(() => {
+        syncCollapsibleCardExpandedHeights();
+    });
+}
+
+function initializeCollapsibleCards() {
+    const cards = document.querySelectorAll(".collapsible-card");
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+        let toggle = card.querySelector(".collapse-toggle");
+        if (!toggle) {
+            toggle = document.createElement("button");
+            toggle.type = "button";
+            toggle.className = "collapse-toggle";
+            toggle.setAttribute("aria-label", "Toggle card");
+            toggle.textContent = ">";
+            card.appendChild(toggle);
+        }
+
+        setCardCollapsedState(card, card.classList.contains("is-collapsed"));
+
+        toggle.addEventListener("click", () => {
+            const isCollapsedState = card.classList.contains("is-collapsed") || card.classList.contains("is-collapsing");
+            const shouldCollapse = !isCollapsedState;
+            setCardCollapsedState(card, shouldCollapse);
+        });
+    });
+
+    syncCollapsibleCardExpandedHeights();
+    if (!collapsibleResizeBound) {
+        window.addEventListener("resize", syncCollapsibleCardExpandedHeights);
+        window.addEventListener("load", () => {
+            syncCollapsibleCardExpandedHeights();
+            setTimeout(syncCollapsibleCardExpandedHeights, 120);
+            setTimeout(syncCollapsibleCardExpandedHeights, 450);
+        });
+        collapsibleResizeBound = true;
+    }
+
+    if (!collapsibleResizeObserver && typeof ResizeObserver !== "undefined") {
+        collapsibleResizeObserver = new ResizeObserver(() => {
+            syncCollapsibleCardExpandedHeights();
+        });
+
+        document.querySelectorAll(".large-card:not(.collapsible-card)").forEach((card) => {
+            collapsibleResizeObserver.observe(card);
+        });
+    }
 }
 
 function setStatusText(message, allowHtml = false) {
@@ -582,6 +704,7 @@ function clearUrlParams() {
 getUserCode();
 initializeLastSeenNoteInteractions();
 renderTodayStats();
+initializeCollapsibleCards();
 
 window.addEventListener("storage", (event) => {
     if (!event.key) return;
@@ -711,3 +834,4 @@ function signOutUser() {
     window.location.replace('../');
     
 }
+
