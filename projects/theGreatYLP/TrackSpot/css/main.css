@@ -62,6 +62,38 @@ button {
     cursor: pointer;
 }
 
+.categoryElement {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) auto;
+    align-items: center;
+    gap: 1.25rem;
+    width: min(92%, 28rem);
+    margin: 0.55rem auto;
+    text-shadow: none;
+}
+
+.strong-cat-element {
+    text-align: left;
+    text-shadow: black 3px 3px 5px;
+}
+
+.stat-cat-element {
+    min-width: 3ch;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.stats-list {
+    list-style: none;
+    margin: 1rem auto 0 auto;
+    padding: 0;
+    width: 100%;
+}
+
+#control-card {
+    text-align: center;
+}
+
 .small {
     font-size: 0.75rem;
 }
@@ -252,6 +284,35 @@ button {
     text-shadow: none;
 }
 
+#last-seen-note {
+    min-height: 1.2rem;
+    margin: 0.6rem auto 0.4rem auto;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+    text-shadow: none;
+    transition: opacity 0.35s ease, transform 0.45s ease, color 0.2s ease, text-shadow 0.2s ease;
+}
+
+#last-seen-note.note-visible {
+    opacity: 0.9;
+    transform: translateY(0);
+}
+
+#last-seen-note.note-fadeout {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+#last-seen-note.note-visible:hover {
+    color: #ffe6ff;
+    text-shadow: 0 0 12px rgba(255, 208, 255, 0.6);
+    transform: translateY(-2px);
+}
+
 /* FX and processing */
 
 h1,
@@ -293,7 +354,7 @@ p {
     transition: transform 0.2s ease-in-out;
 }
 
-#status-text, #album-cover {
+#status-text, #album-cover, #album-cover-background {
     transition: opacity 0.4s ease;
 }
 
@@ -402,6 +463,11 @@ p {
         font-size: 0.5rem;
         padding: 5px;
         margin: 1rem auto;
+    }
+
+    .categoryElement {
+        grid-template-columns: minmax(9rem, 1fr) auto;
+        gap: 0.75rem;
     }
 
     .settings-icon {

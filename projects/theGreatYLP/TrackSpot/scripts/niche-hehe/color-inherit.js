@@ -43,6 +43,76 @@ const bgDiv = document.getElementById("now-playing-card");
 const bgDiv2 = document.getElementById("control-card");
 const outerColor = 'rgba(255, 255, 255, 0.25)';
 
+function normalizeCoverSources(albumCoverSources) {
+    if (Array.isArray(albumCoverSources)) return albumCoverSources.filter(Boolean);
+    if (typeof albumCoverSources === "string" && albumCoverSources.trim()) return [albumCoverSources];
+    return [];
+}
+
+function preloadImage(url) {
+    return new Promise((resolve, reject) => {
+        const preload = new Image();
+        preload.crossOrigin = "anonymous";
+        preload.onload = () => resolve(url);
+        preload.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+        preload.src = url;
+    });
+}
+
+async function getFirstLoadableCoverUrl(sources, currentSrc) {
+    for (const source of sources) {
+        try {
+            await preloadImage(source);
+            return source;
+        } catch (error) {
+            // Try the next lower-priority source.
+        }
+    }
+
+    return currentSrc || null;
+}
+
+function waitForNextPaint() {
+    return new Promise((resolve) => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(resolve);
+        });
+    });
+}
+
+function waitForElementImageLoad(element, expectedUrl) {
+    return new Promise((resolve) => {
+        if (!element) {
+            resolve(false);
+            return;
+        }
+
+        const completeWithUrl = element.complete && (!expectedUrl || element.currentSrc.includes(expectedUrl));
+        if (completeWithUrl) {
+            resolve(true);
+            return;
+        }
+
+        const onLoad = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const onError = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const cleanup = () => {
+            element.removeEventListener("load", onLoad);
+            element.removeEventListener("error", onError);
+        };
+
+        element.addEventListener("load", onLoad, { once: true });
+        element.addEventListener("error", onError, { once: true });
+    });
+}
+
 function updateGradientFromImage() {
     const { r, g, b } = getAverageColor(albumImg);
     const centerColor = `rgb(${r},${g},${b})`;
@@ -58,14 +128,18 @@ function updateGradientFromImage() {
     ${outerColor} 90%)`;
 }
 
-function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progressMs, durationMs) {
+async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId, progressMs, durationMs) {
+    const sources = normalizeCoverSources(albumCoverSources);
+    const currentCoverUrl = img.currentSrc || img.src;
+
     if (trackId && trackId === lastTrackId) {
         document.getElementById('track-title').textContent = name;
         document.getElementById('track-artists').textContent = artists;
-        img.src = albumCoverUrl;
-        img2.src = albumCoverUrl;
         return;
     }
+
+    const chosenCoverUrl = await getFirstLoadableCoverUrl(sources, currentCoverUrl);
+    if (!chosenCoverUrl) return;
 
     lastTrackId = trackId;
 
@@ -73,22 +147,30 @@ function updateNowPlayingVisuals(name, artists, albumCoverUrl, trackId, progress
     img.style.opacity = '0';
     img2.style.opacity = '0';
 
-    setTimeout(() => {
-        document.getElementById('track-title').textContent = name;
-        document.getElementById('track-artists').textContent = artists;
-        img.src = albumCoverUrl;
-        img2.src = albumCoverUrl;
+    document.getElementById('track-title').textContent = name;
+    document.getElementById('track-artists').textContent = artists;
+    img.src = chosenCoverUrl;
+    img2.src = chosenCoverUrl;
 
-        img.onload = () => {
-            statusText.style.opacity = '1';
-            img.style.opacity = '1';
-            updateGradientFromImage();
-        };
+    // Ensure the browser paints the hidden state before we reveal.
+    await waitForNextPaint();
 
-        img2.onload = () => {
-            statusText.style.opacity = '1';
-            img2.style.opacity = '1';
-            updateGradientFromImage();
-        };
-    }, 200);
+    const [foregroundLoaded, backgroundLoaded] = await Promise.all([
+        waitForElementImageLoad(img, chosenCoverUrl),
+        waitForElementImageLoad(img2, chosenCoverUrl)
+    ]);
+
+    if (!foregroundLoaded && !backgroundLoaded) {
+        img.src = currentCoverUrl;
+        img2.src = currentCoverUrl;
+        statusText.style.opacity = '1';
+        img.style.opacity = '1';
+        img2.style.opacity = '1';
+        return;
+    }
+
+    statusText.style.opacity = '1';
+    img.style.opacity = '1';
+    img2.style.opacity = '1';
+    updateGradientFromImage();
 }

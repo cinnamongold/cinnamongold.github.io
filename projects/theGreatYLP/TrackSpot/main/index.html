@@ -31,9 +31,7 @@
     </header>
 
     <main>
-
         
-
         <div class="large-card" id="now-playing-card">
             <h2 class="outline">Now Playing</h2><i id="song-progress"><span>00:00</span> / <span id="song-duration">--:--</span></i>
             <p class="colwhite" id="status-text">
@@ -42,18 +40,24 @@
                 <span id="track-artists" class="colwhite"></span>
             </p>
             <img src="../../../../media/images/static/no_music_icon.png" id="album-cover" crossorigin="anonymous">
+            <p class="small colwhite" id="last-seen-note" aria-live="polite"></p>
 
-            <p class="small colwhite" id="every-10-seconds">Your "Now Playing" section updates every 10 seconds.</p>
+            <p class="small colwhite" id="every-10-seconds">Your "Now Playing" section updates every 5 seconds.</p>
         </div>
 
+        <!--(Changed from prev. iteration) QuickStats card-->
         <div class="large-card" id="control-card">
             <img src="../../../../media/images/static/no_music_icon.png" alt="album cover" id="album-cover-background" crossorigin="anonymous">
-            <h2 class="outline">Music Control</h2>
+            <h2 class="outline">Your stats today</h2>
+            <p class="small colwhite"></p>
 
-            <div class="colwhite control-container" id="play-pause"><span class="control-text">Control features soon!</span></div><br>
-            <div class="colwhite control-container" id=""><button class="control-text b-blue"><img class="control-button-icon" src="../../../../media/svg/play-pause-svgrepo.svg"></button></div>
-            <div class="colwhite control-container" id=""><button class="control-text b-red"><img class="control-button-icon" src="../../../../media/svg/skip-icon-svgrepo.svg"></button></div>
-            <div class="colwhite control-container" id=""><button class="control-text b-red"><img class="control-button-icon" src="../../../../media/svg/previous-icon-svgrepo.svg"></button></div>
+            <ul class="stats-list">
+                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Minutes streamed</span><span class="stat-cat-element" id="minutesStreamedToday">0</span></li>
+                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Tracks streamed</span><span class="stat-cat-element" id="tracksStreamedToday">0</span></li>
+                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Unique artists</span><span class="stat-cat-element" id="uniqueArtistsToday">0</span></li>
+                <li class="colwhite categoryElement roboto-slab-500"><span class="strong-cat-element">Top artist</span><span class="stat-cat-element" id="topArtistToday">-</span></li>
+            </ul>
+
         </div>
 
         <!--Settings modal-->
@@ -67,9 +71,9 @@
                 for debug&#41;</button>
 
             <h3 class="roboto-slab-500">Account</h3>
-            <a href="../"><button class="sign-out b-red general-sans-body">sign out of trackspot</button></a>
+            <a><button onclick="javascript:signOutUser();" class="sign-out b-red general-sans-body">sign out of trackspot</button></a>
 
-            <p class="colwhite general-sans-body">trackspot preview version 1.2<br>this settings menu is unfinished! it will
+            <p class="colwhite general-sans-body">TrackSpot Frontend Version 1.3<br>this settings menu is unfinished! it will
                 look nicer with javascript :&#41;</p>
         </div>
 

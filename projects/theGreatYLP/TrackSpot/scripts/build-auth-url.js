@@ -7,6 +7,15 @@ function generateRandomString(length) {
     return text;
 }
 
+function getStoredItem(key) {
+    return localStorage.getItem(key) || sessionStorage.getItem(key);
+}
+
+// If the user already has a valid session token, skip the welcome/login page.
+if (getStoredItem('access_token') || getStoredItem('refresh_token')) {
+    window.location.replace('./main/');
+}
+
 const sha256 = async (plain) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(plain);
