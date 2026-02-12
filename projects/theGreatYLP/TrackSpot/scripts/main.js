@@ -8,6 +8,7 @@ const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
 const SPOTIFY_NOW_PLAYING_URL = "https://api.spotify.com/v1/me/player/currently-playing";
 const CURRENTLY_PLAYING_POLL_INTERVAL_MS = 5000;
 const TODAY_STATS_KEY = "trackspot_today_stats";
+const TRACK_COUNT_THRESHOLD_MS = 30000;
 
 const generateRandomString = (length) => {
     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
@@ -60,7 +61,9 @@ function getDefaultTodayStats() {
         artistPlayCounts: {},
         artistNamesById: {},
         lastTrackId: null,
-        lastProgressMs: 0
+        lastProgressMs: 0,
+        currentTrackAccumulatedMs: 0,
+        currentTrackQualified: false
     };
 }
 
@@ -76,7 +79,9 @@ function normalizeTodayStats(rawStats) {
         artistPlayCounts: rawStats.artistPlayCounts && typeof rawStats.artistPlayCounts === "object" ? rawStats.artistPlayCounts : {},
         artistNamesById: rawStats.artistNamesById && typeof rawStats.artistNamesById === "object" ? rawStats.artistNamesById : {},
         lastTrackId: typeof rawStats.lastTrackId === "string" ? rawStats.lastTrackId : null,
-        lastProgressMs: Number.isFinite(Number(rawStats.lastProgressMs)) ? Math.max(0, Number(rawStats.lastProgressMs)) : 0
+        lastProgressMs: Number.isFinite(Number(rawStats.lastProgressMs)) ? Math.max(0, Number(rawStats.lastProgressMs)) : 0,
+        currentTrackAccumulatedMs: Number.isFinite(Number(rawStats.currentTrackAccumulatedMs)) ? Math.max(0, Number(rawStats.currentTrackAccumulatedMs)) : 0,
+        currentTrackQualified: rawStats.currentTrackQualified === true
     };
 }
 
@@ -146,6 +151,59 @@ function getLocalStorageNumber(key, fallback = 0) {
     return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+function animateStatNumber(element, nextNumber) {
+    if (!element) return;
+
+    const prev = element.dataset.prevValue ?? String(nextNumber);
+    const next = String(nextNumber);
+    const hasRenderedDigits = element.children.length > 0;
+
+    // Prevent duplicate render passes from wiping an in-progress animation.
+    if (hasRenderedDigits && prev === next) return;
+
+    const maxLen = Math.max(prev.length, next.length);
+    const prevPadded = prev.padStart(maxLen, " ");
+    const nextPadded = next.padStart(maxLen, " ");
+
+    element.innerHTML = "";
+
+    for (let i=0; i<maxLen; i++) {
+        const oldCh = prevPadded[i];
+        const newCh = nextPadded[i];
+
+        const slot = document.createElement("span");
+        slot.className = "stat-digit-slot";
+
+        if (oldCh === newCh) {
+            const stable = document.createElement("span");
+            stable.className = "stat-digit current";
+            stable.textContent = newCh;
+            slot.appendChild(stable);
+        } else {
+            const current = document.createElement("span");
+            current.className = "stat-digit current";
+            current.textContent = oldCh;
+
+            const nextEl = document.createElement("span");
+            nextEl.className = "stat-digit next";
+            nextEl.textContent = newCh;
+
+            slot.appendChild(current);
+            slot.appendChild(nextEl);
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    slot.classList.add("animate");
+                });
+            });
+        }
+
+        element.appendChild(slot);
+    }
+
+    element.dataset.prevValue = next;
+}
+
 function renderTodayStats() {
     const stats = loadTodayStats();
     const minutesFallback = Math.floor(stats.totalMsStreamed / 60000);
@@ -159,9 +217,9 @@ function renderTodayStats() {
     const uniqueArtistsElement = document.getElementById("uniqueArtistsToday");
     const topArtistElement = document.getElementById("topArtistToday");
 
-    if (minutesElement) minutesElement.textContent = String(minutes);
-    if (tracksElement) tracksElement.textContent = String(tracks);
-    if (uniqueArtistsElement) uniqueArtistsElement.textContent = String(uniqueArtists);
+    if (minutesElement) animateStatNumber(minutesElement, minutes);
+    if (tracksElement) animateStatNumber(tracksElement, tracks);
+    if (uniqueArtistsElement) animateStatNumber(uniqueArtistsElement, uniqueArtists);
     if (topArtistElement) topArtistElement.textContent = topArtist;
 }
 
@@ -181,23 +239,30 @@ function updateTodayStatsFromPlayback(data) {
         stats.artistNamesById[artist.id] = artist.name || stats.artistNamesById[artist.id] || "Unknown artist";
     });
 
-    let didTrackChange = false;
+    let shouldCountTrack = false;
     if (trackId) {
         if (stats.lastTrackId !== trackId) {
-            stats.tracksStreamed += 1;
             stats.lastTrackId = trackId;
             stats.lastProgressMs = progressMs;
-            didTrackChange = true;
+            stats.currentTrackAccumulatedMs = 0;
+            stats.currentTrackQualified = false;
         } else if (isPlaying) {
             const deltaMs = progressMs - (stats.lastProgressMs || 0);
             if (deltaMs > 0 && deltaMs < 120000) {
                 stats.totalMsStreamed += deltaMs;
+                stats.currentTrackAccumulatedMs += deltaMs;
             }
             stats.lastProgressMs = progressMs;
+
+            if (!stats.currentTrackQualified && stats.currentTrackAccumulatedMs >= TRACK_COUNT_THRESHOLD_MS) {
+                stats.currentTrackQualified = true;
+                stats.tracksStreamed += 1;
+                shouldCountTrack = true;
+            }
         }
     }
 
-    if (didTrackChange) {
+    if (shouldCountTrack) {
         artistsWithIds.forEach(artist => {
             const currentCount = Number(stats.artistPlayCounts[artist.id]) || 0;
             stats.artistPlayCounts[artist.id] = currentCount + 1;

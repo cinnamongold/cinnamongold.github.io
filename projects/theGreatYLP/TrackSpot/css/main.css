@@ -77,10 +77,51 @@ button {
     text-shadow: black 3px 3px 5px;
 }
 
+/* The actual number displayed */
 .stat-cat-element {
     min-width: 3ch;
     text-align: right;
     font-variant-numeric: tabular-nums;
+    display: inline-flex;
+    gap: 0.08em;
+}
+
+/* The slot per digit for each number. Used for animations */
+.stat-digit-slot {
+    position: relative;
+    display: inline-block;
+    width: 0.72em;
+    height: 1.1em;
+    overflow: hidden;
+}
+
+.stat-digit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    transition: transform 260ms ease, opacity 260ms ease;
+}
+
+.stat-digit.current {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.stat-digit.next {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.stat-digit-slot.animate .stat-digit.current {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.stat-digit-slot.animate .stat-digit.next {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .stats-list {
