@@ -42,6 +42,8 @@ const albumImg2 = document.getElementById("album-cover-background");
 const bgDiv = document.getElementById("now-playing-card");
 const bgDiv2 = document.getElementById("control-card");
 const outerColor = 'rgba(255, 255, 255, 0.25)';
+const COVER_CROSSFADE_MS = 1000;
+let visualsRequestToken = 0;
 
 function normalizeCoverSources(albumCoverSources) {
     if (Array.isArray(albumCoverSources)) return albumCoverSources.filter(Boolean);
@@ -113,6 +115,60 @@ function waitForElementImageLoad(element, expectedUrl) {
     });
 }
 
+function createCoverGhost(currentCoverUrl) {
+    if (!currentCoverUrl || !img || !bgDiv) return null;
+
+    const cardRect = bgDiv.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
+
+    const ghost = document.createElement("img");
+    ghost.src = currentCoverUrl;
+    ghost.crossOrigin = "anonymous";
+    ghost.alt = "";
+    ghost.ariaHidden = "true";
+
+    ghost.style.position = "absolute";
+    ghost.style.left = `${imgRect.left - cardRect.left}px`;
+    ghost.style.top = `${imgRect.top - cardRect.top}px`;
+    ghost.style.width = `${imgRect.width}px`;
+    ghost.style.height = `${imgRect.height}px`;
+    ghost.style.objectFit = "contain";
+    ghost.style.borderRadius = getComputedStyle(img).borderRadius;
+    ghost.style.boxShadow = getComputedStyle(img).boxShadow;
+    ghost.style.opacity = "1";
+    ghost.style.pointerEvents = "none";
+    ghost.style.zIndex = "2";
+    ghost.style.transition = `opacity ${COVER_CROSSFADE_MS}ms ease`;
+
+    bgDiv.appendChild(ghost);
+    return ghost;
+}
+
+function createBackgroundGhost(currentCoverUrl) {
+    if (!currentCoverUrl || !bgDiv2) return null;
+
+    const ghost = document.createElement("img");
+    ghost.src = currentCoverUrl;
+    ghost.crossOrigin = "anonymous";
+    ghost.alt = "";
+    ghost.ariaHidden = "true";
+
+    ghost.style.position = "absolute";
+    ghost.style.inset = "0";
+    ghost.style.width = "100%";
+    ghost.style.height = "100%";
+    ghost.style.objectFit = "cover";
+    ghost.style.objectPosition = "center";
+    ghost.style.opacity = "0.1";
+    ghost.style.filter = "blur(10px) brightness(80%)";
+    ghost.style.pointerEvents = "none";
+    ghost.style.zIndex = "-90";
+    ghost.style.transition = `opacity ${COVER_CROSSFADE_MS}ms ease`;
+
+    bgDiv2.appendChild(ghost);
+    return ghost;
+}
+
 function updateGradientFromImage() {
     const { r, g, b } = getAverageColor(albumImg);
     const centerColor = `rgb(${r},${g},${b})`;
@@ -129,6 +185,7 @@ function updateGradientFromImage() {
 }
 
 async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId, progressMs, durationMs) {
+    const requestToken = ++visualsRequestToken;
     const sources = normalizeCoverSources(albumCoverSources);
     const currentCoverUrl = img.currentSrc || img.src;
 
@@ -140,11 +197,19 @@ async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId
 
     const chosenCoverUrl = await getFirstLoadableCoverUrl(sources, currentCoverUrl);
     if (!chosenCoverUrl) return;
+    if (requestToken !== visualsRequestToken) return;
 
     lastTrackId = trackId;
+    const shouldCrossfadeCover = !!currentCoverUrl && currentCoverUrl !== chosenCoverUrl;
+    const coverGhost = shouldCrossfadeCover ? createCoverGhost(currentCoverUrl) : null;
+    const backgroundGhost = shouldCrossfadeCover ? createBackgroundGhost(currentCoverUrl) : null;
+
+    img.style.transition = `opacity ${COVER_CROSSFADE_MS}ms ease`;
+    img2.style.transition = `opacity ${COVER_CROSSFADE_MS}ms ease`;
+    statusText.style.transition = `opacity 350ms ease`;
 
     statusText.style.opacity = '0';
-    img.style.opacity = '0';
+    img.style.opacity = shouldCrossfadeCover ? '0' : '0';
     img2.style.opacity = '0';
 
     document.getElementById('track-title').textContent = name;
@@ -159,6 +224,11 @@ async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId
         waitForElementImageLoad(img, chosenCoverUrl),
         waitForElementImageLoad(img2, chosenCoverUrl)
     ]);
+    if (requestToken !== visualsRequestToken) {
+        if (coverGhost && coverGhost.parentNode) coverGhost.remove();
+        if (backgroundGhost && backgroundGhost.parentNode) backgroundGhost.remove();
+        return;
+    }
 
     if (!foregroundLoaded && !backgroundLoaded) {
         img.src = currentCoverUrl;
@@ -166,11 +236,34 @@ async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId
         statusText.style.opacity = '1';
         img.style.opacity = '1';
         img2.style.opacity = '1';
+        if (coverGhost && coverGhost.parentNode) coverGhost.remove();
+        if (backgroundGhost && backgroundGhost.parentNode) backgroundGhost.remove();
         return;
     }
 
     statusText.style.opacity = '1';
     img.style.opacity = '1';
     img2.style.opacity = '1';
+
+    if (coverGhost) {
+        requestAnimationFrame(() => {
+            coverGhost.style.opacity = "0";
+        });
+
+        setTimeout(() => {
+            if (coverGhost.parentNode) coverGhost.remove();
+        }, COVER_CROSSFADE_MS + 80);
+    }
+
+    if (backgroundGhost) {
+        requestAnimationFrame(() => {
+            backgroundGhost.style.opacity = "0";
+        });
+
+        setTimeout(() => {
+            if (backgroundGhost.parentNode) backgroundGhost.remove();
+        }, COVER_CROSSFADE_MS + 80);
+    }
+
     updateGradientFromImage();
 }
