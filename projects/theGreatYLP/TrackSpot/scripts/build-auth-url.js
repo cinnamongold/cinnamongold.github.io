@@ -35,7 +35,7 @@ document.getElementById('spotify-login').addEventListener('click', async functio
     const hashed = await sha256(codeVerifier);
     const codeChallenge = base64encode(hashed);
 
-    const clientId = '3876dfbb34e04fbdb28027a22c38a557';
+    const clientId = 'a376cac057d4482192c1d4a1d5d1630c';
     const selected = document.querySelector('input[name="login-type"]:checked');
     const redirectUri = selected ? selected.value : null;
     localStorage.setItem('redirect_uri', redirectUri);
