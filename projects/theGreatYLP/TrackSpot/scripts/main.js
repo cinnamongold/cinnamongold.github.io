@@ -809,8 +809,12 @@ async function getCurrentlyPlaying(retryOnAuthError = true) {
     persistLastSeenTrack({ name, artists, albumCoverUrl, trackId, durationMs });
     hideLastSeenNote();
     resetStatusTextLayout();
-    updateNowPlayingVisuals(name, artists, albumCoverUrls.length ? albumCoverUrls : [albumCoverUrl], trackId, progressMs, durationMs)
-    startProgressTimer(progressMs, durationMs);
+    if (typeof updateNowPlayingVisuals === "function") {
+        updateNowPlayingVisuals(name, artists, albumCoverUrls.length ? albumCoverUrls : [albumCoverUrl], trackId, progressMs, durationMs);
+    }
+    if (typeof startProgressTimer === "function") {
+        startProgressTimer(progressMs, durationMs);
+    }
     renderTodayStats();
 }
 

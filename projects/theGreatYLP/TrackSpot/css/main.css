@@ -35,7 +35,7 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    margin: none;
+    margin: 0;
     margin-bottom: 0px;
 }
 
@@ -321,7 +321,7 @@ button {
 
 .artist-hr {
     width: 50%;
-    margin: none;
+    margin: 0;
     margin: -15px auto 0 auto;
     border: 1px solid white;
 
