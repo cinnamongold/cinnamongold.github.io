@@ -3,7 +3,7 @@
 
 // generate a PKCE "helper" code, get the user code,  and trade it for an actual auth token
 
-const SPOTIFY_CLIENT_ID = "3876dfbb34e04fbdb28027a22c38a557";
+const SPOTIFY_CLIENT_ID = "a376cac057d4482192c1d4a1d5d1630c";
 const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
 const SPOTIFY_NOW_PLAYING_URL = "https://api.spotify.com/v1/me/player/currently-playing";
 const CURRENTLY_PLAYING_POLL_INTERVAL_MS = 5000;
@@ -636,6 +636,8 @@ async function exchangeCodeForToken() {
     const codeVerifier = getStoredItem('code_verifier');
     const redirectUri = getStoredItem('redirect_uri');
 
+    console.log('Exchange attempt with:', { code: code ? 'present' : 'missing', codeVerifier: codeVerifier ? 'present' : 'missing', redirectUri });
+
     if (!code || !codeVerifier || !redirectUri) {
         console.error("Missing code or code verifier");
         setStatusText("Login context expired. Please sign in again.");
@@ -649,6 +651,8 @@ async function exchangeCodeForToken() {
         redirect_uri: redirectUri,
         code_verifier: codeVerifier
     });
+
+    console.log('Sending token request with body:', body.toString());
 
     const response = await fetch(SPOTIFY_TOKEN_URL, {
         method: 'POST',

@@ -16,6 +16,8 @@ if (getStoredItem('access_token') || getStoredItem('refresh_token')) {
     window.location.replace('./main/');
 }
 
+const SPOTIFY_CLIENT_ID = 'a376cac057d4482192c1d4a1d5d1630c';
+
 const sha256 = async (plain) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(plain);
@@ -35,7 +37,7 @@ document.getElementById('spotify-login').addEventListener('click', async functio
     const hashed = await sha256(codeVerifier);
     const codeChallenge = base64encode(hashed);
 
-    const clientId = 'a376cac057d4482192c1d4a1d5d1630c';
+    const clientId = SPOTIFY_CLIENT_ID;
     const selected = document.querySelector('input[name="login-type"]:checked');
     const redirectUri = selected ? selected.value : null;
     localStorage.setItem('redirect_uri', redirectUri);
