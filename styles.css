@@ -13,8 +13,10 @@ section a {
 }
 
 a {
-    color: white;
     text-decoration: none;
+    color: rgb(0, 138, 138);
+
+    transition: color 0.25s;
 }
 
 hr {
@@ -23,50 +25,72 @@ hr {
 }
 
 section {
-    display: block;
+    display: inline-flex;
     margin: 1rem;
-    width: 95vw;
+    width: 90vw;
+
+    background: rgb(255 255 255 / 50%);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+
+    box-shadow: 4px 3px 0px 0px rgb(51,135,196);
+    
+    transition: box-shadow 0.3s, margin-bottom 0.3s, transform 0.3s;
 }
 
 footer {
     display: inline-flex;
-    margin: 1rem;
-    width: 95vw;
+    align-items: center;
+    margin-left: 1rem;
 }
 
-.top-bar {
-    display: inline-flex;
-
-    background-color: rgb(255,255,255,0.5);
-    border: 5px solid rgb(51, 135, 196);
-    border-radius: 15px;
-}
-
-.top-bar a {
-    text-decoration: none;
-    color: darkcyan;
+footer section {
+    width: 44vw;
+    height: 8rem;
 }
 
 #main-header {
     color: rgb(51, 135, 196);
-    margin-top: 2rem;
+    margin: 1rem;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
 }
 
 #top-bar-navigation {
-    display: inline;
-    margin: 1rem 2rem 1rem 0;
+    display: flex;
+    gap: 1rem;
+    margin: 0 1rem 0 auto;
 }
 
-#media-section, footer {
-    display: inline-flex;
-
-    background-color: rgb(255,255,255,0.5);
-    border: 5px solid rgb(51, 135, 196);
-    border-radius: 15px;
+#top-bar-navigation p {
+    margin: 0;
 }
 
 #contact-section {
     margin: 0;
 }
 
-/* Hover effects */
+/* Hover anims and FX */
+
+section:hover {
+    box-shadow: 6px 8px 0px 0px blue;
+    margin-bottom: 2rem;
+
+    transform: translate(
+        calc(var(--x) * 0.05px - 30px),
+        calc(var(--y) * 0.01px)
+    );
+
+    transition: box-shadow 0.3s, margin 0.3s, transform 0.3s;
+}
+
+a:hover {
+    color: rgb(0, 186, 186);
+
+    transition: color 0.25s;
+}
