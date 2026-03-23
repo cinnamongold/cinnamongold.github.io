@@ -1,3 +1,5 @@
+console.log("BEWARE OF CONSOLE SPAM")
+
 // Follow cursor script
 // Elements to move
 const followers = document.querySelectorAll("section");
