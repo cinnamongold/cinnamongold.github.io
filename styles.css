@@ -46,7 +46,7 @@ footer {
 
 footer section {
     width: 44vw;
-    height: 8rem;
+    min-height: 8rem;
 }
 
 #main-header {
@@ -93,4 +93,37 @@ a:hover {
     color: rgb(0, 186, 186);
 
     transition: color 0.25s;
+}
+
+/* Mobile override  */
+
+@media (max-width: 48em) {
+    body {
+        display: block;
+    }
+    
+    section {
+        width: 80vw;
+        display: block;
+    }
+
+    footer {
+        display: block;
+        width: 80vw;
+    }
+
+    footer section {
+        width: 80vw;
+        min-height: 0;
+        height: auto;
+        padding: 1rem;
+    }
+
+    #top-bar-navigation {
+        display: block;
+    }
+
+    section:hover {
+        margin: 1rem;
+    }
 }
