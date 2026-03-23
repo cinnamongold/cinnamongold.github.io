@@ -180,6 +180,16 @@ button {
     margin: 0.5rem;
 }
 
+.track-info-link {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.5em 1em;
+    border: 2px solid whitesmoke;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
 .collapsible-card {
     --expanded-card-height: 24rem;
     --collapsed-height: calc(var(--expanded-card-height) / 4);

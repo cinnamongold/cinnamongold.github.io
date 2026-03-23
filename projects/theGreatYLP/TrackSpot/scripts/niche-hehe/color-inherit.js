@@ -184,14 +184,26 @@ function updateGradientFromImage() {
     ${outerColor} 90%)`;
 }
 
-async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId, progressMs, durationMs) {
+async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId, progressMs, durationMs, primaryArtistName, albumName, primaryArtistId, albumId) {
     const requestToken = ++visualsRequestToken;
     const sources = normalizeCoverSources(albumCoverSources);
     const currentCoverUrl = img.currentSrc || img.src;
+    const artistNameEl = document.getElementById("artist-name");
+    const albumNameEl = document.getElementById("album-name");
+    const artistLinkEl = document.getElementById("artist-link");
+    const albumLinkEl = document.getElementById("album-link");
+    const profileArtistLabel = primaryArtistName || artists;
+    const albumLabel = albumName || "this track's";
+    const artistUrl = primaryArtistId ? `https://open.spotify.com/artist/${primaryArtistId}` : "https://open.spotify.com";
+    const albumUrl = albumId ? `https://open.spotify.com/album/${albumId}` : "https://open.spotify.com";
 
     if (trackId && trackId === lastTrackId) {
         document.getElementById('track-title').textContent = name;
         document.getElementById('track-artists').textContent = artists;
+        if (artistNameEl) artistNameEl.textContent = profileArtistLabel;
+        if (albumNameEl) albumNameEl.textContent = albumLabel;
+        if (artistLinkEl) artistLinkEl.href = artistUrl;
+        if (albumLinkEl) albumLinkEl.href = albumUrl;
         return;
     }
 
@@ -214,6 +226,10 @@ async function updateNowPlayingVisuals(name, artists, albumCoverSources, trackId
 
     document.getElementById('track-title').textContent = name;
     document.getElementById('track-artists').textContent = artists;
+    if (artistNameEl) artistNameEl.textContent = profileArtistLabel;
+    if (albumNameEl) albumNameEl.textContent = albumLabel;
+    if (artistLinkEl) artistLinkEl.href = artistUrl;
+    if (albumLinkEl) albumLinkEl.href = albumUrl;
     img.src = chosenCoverUrl;
     img2.src = chosenCoverUrl;
 

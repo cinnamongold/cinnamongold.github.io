@@ -566,6 +566,10 @@ function persistLastSeenTrack(track) {
     const payload = {
         name: track.name,
         artists: track.artists,
+        primaryArtist: track.primaryArtist,
+        primaryArtistId: track.primaryArtistId,
+        albumName: track.albumName,
+        albumId: track.albumId,
         albumCoverUrl: track.albumCoverUrl,
         trackId: track.trackId,
         durationMs: track.durationMs || 0,
@@ -585,12 +589,32 @@ function renderLastSeenTrackOrEmpty() {
     const lastSeenText = formatLastSeenTimestamp(cachedTrack.lastSeenAt);
     const trackTitle = document.getElementById("track-title");
     const trackArtists = document.getElementById("track-artists");
+    const viewArtistPageContent = document.getElementById("artist-name");
+    const viewAlbumPageContent = document.getElementById("album-name");
+    const viewArtistPageLink = document.getElementById("artist-link");
+    const viewAlbumPageLink = document.getElementById("album-link");
 
     resetStatusTextLayout();
     if (trackTitle) trackTitle.textContent = cachedTrack.name;
     const seenLabel = lastSeenText ? `Last seen ${lastSeenText}` : "Last seen recently";
     if (trackArtists) {
         trackArtists.textContent = cachedTrack.artists;
+    }
+    if (viewArtistPageContent) {
+        viewArtistPageContent.textContent = cachedTrack.primaryArtist || cachedTrack.artists.split(",")[0].trim();
+    }
+    if (viewAlbumPageContent) {
+        viewAlbumPageContent.textContent = cachedTrack.albumName || "this track's";
+    }
+    if (viewArtistPageLink) {
+        viewArtistPageLink.href = cachedTrack.primaryArtistId
+            ? `https://open.spotify.com/artist/${cachedTrack.primaryArtistId}`
+            : "https://open.spotify.com";
+    }
+    if (viewAlbumPageLink) {
+        viewAlbumPageLink.href = cachedTrack.albumId
+            ? `https://open.spotify.com/album/${cachedTrack.albumId}`
+            : "https://open.spotify.com";
     }
     showLastSeenNote(seenLabel, cachedTrack.lastSeenAt);
 
@@ -601,7 +625,11 @@ function renderLastSeenTrackOrEmpty() {
             [cachedTrack.albumCoverUrl],
             cachedTrack.trackId || `last-seen-${cachedTrack.lastSeenAt || Date.now()}`,
             0,
-            cachedTrack.durationMs || 0
+            cachedTrack.durationMs || 0,
+            cachedTrack.primaryArtist || cachedTrack.artists.split(",")[0].trim(),
+            cachedTrack.albumName || "this track's",
+            cachedTrack.primaryArtistId || "",
+            cachedTrack.albumId || ""
         );
     }
 
@@ -796,6 +824,10 @@ async function getCurrentlyPlaying(retryOnAuthError = true) {
     const item = data.item;
     const name = item.name;
     const artists = item.artists.map(a => a.name).join(', ');
+    const primaryArtist = item.artists?.[0]?.name || artists;
+    const primaryArtistId = item.artists?.[0]?.id || "";
+    const albumName = item.album?.name || "this track's";
+    const albumId = item.album?.id || "";
     const albumCoverUrls = (item.album.images || []).map(image => image.url).filter(Boolean);
     const albumCoverUrl = albumCoverUrls[0] || item.album.images?.[0]?.url || "";
     const trackId = item.id;
@@ -804,17 +836,17 @@ async function getCurrentlyPlaying(retryOnAuthError = true) {
     const durationMs = item.duration_ms;
 
     if (!isPlaying) {
-        persistLastSeenTrack({ name, artists, albumCoverUrl, trackId, durationMs });
+        persistLastSeenTrack({ name, artists, primaryArtist, primaryArtistId, albumName, albumId, albumCoverUrl, trackId, durationMs });
         renderLastSeenTrackOrEmpty();
         renderTodayStats();
         return;
     }
 
-    persistLastSeenTrack({ name, artists, albumCoverUrl, trackId, durationMs });
+    persistLastSeenTrack({ name, artists, primaryArtist, primaryArtistId, albumName, albumId, albumCoverUrl, trackId, durationMs });
     hideLastSeenNote();
     resetStatusTextLayout();
     if (typeof updateNowPlayingVisuals === "function") {
-        updateNowPlayingVisuals(name, artists, albumCoverUrls.length ? albumCoverUrls : [albumCoverUrl], trackId, progressMs, durationMs);
+        updateNowPlayingVisuals(name, artists, albumCoverUrls.length ? albumCoverUrls : [albumCoverUrl], trackId, progressMs, durationMs, primaryArtist, albumName, primaryArtistId, albumId);
     }
     if (typeof startProgressTimer === "function") {
         startProgressTimer(progressMs, durationMs);
@@ -862,4 +894,3 @@ function signOutUser() {
     window.location.replace('../');
     
 }
-
