@@ -1,20 +1,72 @@
 body {
-    background-color: white;
+    background-color: rgb(144, 192, 231);
     font-family: Arial, Helvetica, sans-serif;
 }
 
+h1, h2, h3, .offset-1rem-left {
+    margin: 1rem 1rem 0 1rem;
+}
+
+section a {
+    text-decoration: none;
+    color:rgb(159, 160, 255);
+}
+
 a {
+    color: white;
+    text-decoration: none;
+}
+
+hr {
+    border: 5px solid rgb(149, 195, 255);
+    border-radius: 5px;
+}
+
+section {
+    display: block;
+    margin: 1rem;
+    width: 95vw;
+}
+
+footer {
+    display: inline-flex;
+    margin: 1rem;
+    width: 95vw;
+}
+
+.top-bar {
+    display: inline-flex;
+
+    background-color: rgb(255,255,255,0.5);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+}
+
+.top-bar a {
     text-decoration: none;
     color: darkcyan;
 }
 
-.tiny-header {
-    font-size: 0.5em;
-    vertical-align: super;
-    color: gray;
+#main-header {
+    color: rgb(51, 135, 196);
+    margin-top: 2rem;
 }
 
-#small-hr {
-    width: 50%;
-    margin-left: 0%;
+#top-bar-navigation {
+    display: inline;
+    margin: 1rem 2rem 1rem 0;
 }
+
+#media-section, footer {
+    display: inline-flex;
+
+    background-color: rgb(255,255,255,0.5);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+}
+
+#contact-section {
+    margin: 0;
+}
+
+/* Hover effects */
