@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(25, 25, 25);
+    color: white;
+    font-family: monospace;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 170, 0);
+    font-size: 0.95rem;
+
+    transition: color 0.25s, text-shadow 0.25s;
+}
+
+a:hover {
+    color: rgb(0,220,0);
+    text-decoration: underline;
+    text-shadow: 0 0.1rem 5px rgb(0,230,0);
+
+    transition: color 0.25s, text-shadow 0.25s;
+}
+
+/* add little caret lol */
+a::before {
+    content: "> ";
+}
+
+hr {
+    border: 4px dashed rgb(0,200,0);
+}
+
+.small-footnote {
+    font-size: 0.8rem;
+    margin: 0.05rem 0 0.3rem 0;
+}
