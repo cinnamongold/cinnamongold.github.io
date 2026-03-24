@@ -126,6 +126,14 @@ button:hover {
     transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
 }
 
+button:active {
+    box-shadow: 7px 9px 0px 0px rgb(180, 230, 255);
+    background-color: rgb(177, 241, 255);
+    padding: 0.9rem;
+
+    transition: box-shadow 0.15s, padding 0.15s, background-color 0.15s;
+}
+
 a:hover {
     color: rgb(0, 186, 186);
     cursor: copy;
