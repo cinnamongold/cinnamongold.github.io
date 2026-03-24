@@ -61,6 +61,31 @@ footer section {
     width: 100%;
 }
 
+button {
+    width: auto;
+    padding: 0.75rem;
+
+    background: rgb(255 255 255 / 50%);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+
+    box-shadow: 4px 3px 0px 0px rgb(51,135,196);
+    
+    transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
+}
+
+button a {
+    color: rgb(108, 169, 255);
+}
+
+#username {
+    font-family: monospace;
+    font-size: 2rem;
+    color: rgb(30, 83, 121);
+
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
 #top-bar-navigation {
     display: flex;
     gap: 1rem;
@@ -82,17 +107,41 @@ section:hover {
     margin-bottom: 2rem;
 
     transform: translate(
-        calc(var(--x) * 0.05px - 30px),
+        calc(var(--x) * 0.05px - 20px),
         calc(var(--y) * 0.01px)
     );
 
     transition: box-shadow 0.3s, margin 0.3s, transform 0.3s;
 }
 
+button:hover {
+    box-shadow: 6px 8px 0px 0px rgb(159, 215, 255);
+    padding: 0.8rem;
+
+    transform: translate(
+        calc(var(--x) * 0.05px - 60px),
+        calc(var(--y) * 0.01px - 5px)
+    );
+
+    transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
+}
+
 a:hover {
     color: rgb(0, 186, 186);
+    cursor: copy;
 
     transition: color 0.25s;
+}
+
+button a:hover {
+    color: rgb(159, 160, 255);
+}
+
+#username:hover {
+    color: rgb(43, 120, 175);
+    text-shadow: 0px 0px 10px rgb(128, 219, 255);
+
+    transition: color 0.3s, text-shadow 0.3s;
 }
 
 /* Mobile override  */
