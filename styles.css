@@ -1,3 +1,8 @@
+:root {
+    --x: 0;
+    --y: 0;
+}
+
 body {
     background-color: rgb(144, 192, 231);
     font-family: Arial, Helvetica, sans-serif;
@@ -26,7 +31,7 @@ hr {
 
 section {
     display: inline-flex;
-    margin: 1rem;
+    margin: 1rem 1rem 1rem 2rem;
     width: 90vw;
 
     background: rgb(255 255 255 / 50%);
@@ -41,7 +46,7 @@ section {
 footer {
     display: inline-flex;
     align-items: center;
-    margin-left: 1rem;
+    margin-left: 2rem;
 }
 
 footer section {
@@ -56,6 +61,7 @@ footer section {
 
 .top-bar {
     display: flex;
+    margin-top: 0.4rem;
     align-items: center;
     gap: 1rem;
     width: 100%;
@@ -103,15 +109,14 @@ button a {
 /* Hover anims and FX */
 
 section:hover {
-    box-shadow: 6px 8px 0px 0px blue;
-    margin-bottom: 2rem;
+    box-shadow: calc(var(--x) * 0.02px - 10px) calc(var(--y) * 0.02px + 5px) 0 0 rgb(44, 79, 255);
+
+    margin-bottom: 0.5rem;
 
     transform: translate(
-        calc(var(--x) * 0.05px - 20px),
-        calc(var(--y) * 0.01px)
+        calc(var(--x) * 0.02px - 20px),
+        calc(var(--y) * 0.02px - 20px)
     );
-
-    transition: box-shadow 0.3s, margin 0.3s, transform 0.3s;
 }
 
 button:hover {
