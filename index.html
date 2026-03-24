@@ -24,8 +24,8 @@
                 <h1 id="main-header">hi, <span id="username">user</span>! <img src="media/images/gif/hi.gif" width="50px"></h1>
 
                 <nav id="top-bar-navigation">
-                    <button><a href="projects/">project directory</a></button>
-                    <button><a href="about.html">what is this??</a></button>
+                    <button onclick="javascript:openLink('projects/', false)"><a>project directory</a></button>
+                    <button onclick="javascript:openLink('about.html', false)"><a>what is this??</a></button>
                     <button class="button-blue" onclick="javascript:changeUsername()"><a>change my name</a></button>
                 </nav>
             </div>
@@ -73,6 +73,7 @@
 
     <!--Scripts!-->
     <script src="main.js"></script>
+    <script src="homepage-scripts/local-APIs.js"></script>
 </body>
 
 </html>
