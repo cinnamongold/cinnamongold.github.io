@@ -44,10 +44,14 @@ function changeUsername() {
     if (!newUsername || newUsername.trim === "") {
         console.log("username was not updated");
         return "username was not updated"
+    } else if (newUsername.length >= 40) {
+        alert("username should be below 40 characters");
+        console.log("username was not updated, too long");
+        return "username was not updated, too long"
     } else {
         // Update in localStorage and display
         localStorage.setItem("username", newUsername);
-        updateUsernameField()
+        updateUsernameField();
         console.log("username updated to " + newUsername);
         return "username updated to " + newUsername
     }
