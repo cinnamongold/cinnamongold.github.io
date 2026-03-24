@@ -19,11 +19,6 @@ document.addEventListener("mousemove", (e) => {
     })
 });
 
-// Change username 
-// First, alert() asking for name, store as const var username
-// Save and update to local storage
-// On page load, and on update, update #username display
-
 // This function checks for and updates the display name accordingly
 function updateUsernameField() {
     const username = localStorage.getItem("username"); // Get username from localStorage
