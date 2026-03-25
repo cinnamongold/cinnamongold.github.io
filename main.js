@@ -2,6 +2,7 @@
 console.log("BEWARE OF CONSOLE SPAM");
 
 // Init vars
+const currentWindowLocation = window.location.href;
 
 // Follow cursor script
 // Elements to move
@@ -51,5 +52,13 @@ function changeUsername() {
         return "username updated to " + newUsername
     }
 }
+
+// This function redirects mobile users to a cleaner UI for them
+if (window.matchMedia('(max-width: 768px)').matches && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
+    window.location.href = "mobile";
+    console.log("small screen detected! going to mobile site");
+}
+
+// Init functions
 
 console.log(updateUsernameField());
