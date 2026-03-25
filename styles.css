@@ -8,13 +8,16 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-h1, h2, h3, .offset-1rem-left {
+h1,
+h2,
+h3,
+.offset-1rem-left {
     margin: 1rem 1rem 0 1rem;
 }
 
 section a {
     text-decoration: none;
-    color:rgb(159, 160, 255);
+    color: rgb(159, 160, 255);
 }
 
 a {
@@ -29,29 +32,40 @@ hr {
     border-radius: 5px;
 }
 
-section {
-    display: inline-flex;
-    margin: 1rem 1rem 1rem 2rem;
-    width: 90vw;
+main > section {
+    display: flex;
+    margin: 1rem 2rem 1rem 2rem;
+    width: auto;
 
     background: rgb(255 255 255 / 50%);
     border: 5px solid rgb(51, 135, 196);
     border-radius: 15px;
 
-    box-shadow: 4px 3px 0px 0px rgb(51,135,196);
-    
+    box-shadow: 4px 3px 0px 0px rgb(51, 135, 196);
+
     transition: box-shadow 0.3s, margin-bottom 0.3s, transform 0.3s;
 }
 
 footer {
-    display: inline-flex;
-    align-items: center;
+    display: flex;
+    align-items: stretch;
     margin-left: 2rem;
 }
 
 footer section {
-    width: 44vw;
-    min-height: 8rem;
+    flex: 1;
+    margin: 0 2rem;
+
+    background: rgb(255 255 255 / 50%);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+    box-shadow: 4px 3px 0px 0px rgb(51, 135, 196);
+
+    transition: box-shadow 0.3s, margin-bottom 0.3s, transform 0.3s;
+}
+
+footer section hr {
+    width: 95%;
 }
 
 #main-header {
@@ -75,13 +89,21 @@ button {
     border: 5px solid rgb(51, 135, 196);
     border-radius: 15px;
 
-    box-shadow: 4px 3px 0px 0px rgb(51,135,196);
-    
+    box-shadow: 4px 3px 0px 0px rgb(51, 135, 196);
+
     transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
 }
 
 button a {
     color: rgb(108, 169, 255);
+}
+
+.svg {
+    width: 1.5rem;
+    object-fit: contain;
+    display: block;
+
+    filter: drop-shadow( 2px 3px rgba(0, 0, 0, 0.178));
 }
 
 #username {
@@ -110,6 +132,10 @@ button a {
     margin: 0;
 }
 
+#contact-section button {
+    margin-bottom: 1rem;
+}
+
 /* Hover anims and FX */
 
 section:hover {
@@ -117,22 +143,18 @@ section:hover {
 
     margin-bottom: 0.5rem;
 
-    transform: translate(
-        calc(var(--x) * 0.02px - 20px),
-        calc(var(--y) * 0.02px - 20px)
-    );
+    transform: translate(calc(var(--x) * 0.02px - 20px),
+            calc(var(--y) * 0.02px - 10px));
 }
 
 button:hover {
     box-shadow: 6px 8px 0px 0px rgb(159, 215, 255);
     padding: 0.8rem;
 
-    transform: translate(
-        calc(var(--x) * 0.05px - 60px),
-        calc(var(--y) * 0.01px - 5px)
-    );
+    transform: translate(calc(var(--x) * 0.05px - 60px),
+            calc(var(--y) * 0.01px - 5px));
 
-    transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
+    transition: box-shadow 0.3s ease-in-out, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
 }
 
 button:active {
@@ -154,6 +176,12 @@ button a:hover {
     color: rgb(159, 160, 255);
 }
 
+#contact-section button:hover {
+    transform: translate(calc(var(--x) * 0.05px - 10px), calc(var(--y) * 0.01px - 5px));
+
+    transition: box-shadow 0.3s ease-in-out, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
+}
+
 #username:hover {
     color: rgb(43, 120, 175);
     text-shadow: 0px 0px 10px rgb(128, 219, 255);
@@ -161,6 +189,4 @@ button a:hover {
     transition: color 0.3s, text-shadow 0.3s;
 }
 
-@media screen and (max-width: 768px) {
-    
-}
+@media screen and (max-width: 768px) {}
