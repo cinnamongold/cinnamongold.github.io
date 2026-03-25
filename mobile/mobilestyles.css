@@ -1,0 +1,59 @@
+body {
+    background-color: rgb(144, 192, 231);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 138, 138);
+
+    transition: color 0.25s;
+}
+
+hr {
+    border: 5px solid rgb(149, 195, 255);
+    border-radius: 5px;
+}
+
+section {
+    display: flex;
+    margin: 0.5rem;
+    padding: 1rem 0.5rem;
+    width: fit-content;
+
+    background: rgb(255 255 255 / 50%);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+
+    box-shadow: 4px 3px 0px 0px rgb(51,135,196);
+}
+
+#main-header {
+    color: rgb(51, 135, 196);
+    margin: 1rem;
+}
+
+#username {
+    font-family: monospace;
+    font-size: 2rem;
+    color: rgb(30, 83, 121);
+    text-shadow: 0 0 10px rgb(0, 162, 255);
+}
+
+#second-media-section {
+    padding: 1rem 0.5rem;
+}
+
+button {
+    width: auto;
+    margin: 0.5rem 0.25rem;
+    padding: 0.75rem;
+
+    background: rgb(255 255 255 / 50%);
+    border: 5px solid rgb(51, 135, 196);
+    border-radius: 15px;
+
+    box-shadow: 4px 3px 0px 0px rgb(51,135,196);
+    
+    transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
+}
