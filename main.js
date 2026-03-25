@@ -56,10 +56,10 @@ function changeUsername() {
 
 // This function redirects mobile users to a cleaner UI for them
 function checkForMobile() {
-    if (isMobile && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
+    if (isMobile && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io/")) {
         window.location.href = "mobile";
         console.log("Screen too bebeh");
-    } else if(isMobile === false && (currentWindowLocation == "http://127.0.0.1:5500/mobile" || currentWindowLocation == "https://cinnamongold.github.io/mobile")) {
+    } else if(isMobile === false && (currentWindowLocation == "http://127.0.0.1:5500/mobile" || currentWindowLocation == "https://cinnamongold.github.io/mobile/")) {
         console.log("Desktop detected, switching to correct site...")
     } else {
         console.log("No change in site needed.");
