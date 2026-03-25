@@ -59,13 +59,15 @@ function checkForMobile() {
     if (isMobile && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
         window.location.href = "mobile";
         console.log("Screen too bebeh");
+    } else if(isMobile === false && (currentWindowLocation == "http://127.0.0.1:5500/mobile" || currentWindowLocation == "https://cinnamongold.github.io/mobile")) {
+        console.log("Desktop detected, switching to correct site...")
     } else {
-        console.log("cinnamongold.github.io - Desktop Front-end 2.0");
+        console.log("No change in site needed.");
     }
 }
 
 // Init functions
 
 window.addEventListener('load', checkForMobile);
-console.log("username: ", updateUsernameField());
+console.log("-- ", updateUsernameField());
 console.log("Mobile Detected?: ", isMobile);
