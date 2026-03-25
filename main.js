@@ -54,11 +54,16 @@ function changeUsername() {
 }
 
 // This function redirects mobile users to a cleaner UI for them
-if (window.matchMedia('(max-width: 768px)').matches && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
-    window.location.href = "mobile";
-    console.log("small screen detected! going to mobile site");
+function checkForMobile() {
+    if (window.matchMedia('(max-width: 768px)').matches && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
+        window.location.href = "mobile";
+        console.log("small screen detected! going to mobile site");
+    } else {
+        console.log("nothing weird, loading default site");
+    }
 }
 
 // Init functions
 
+window.addEventListener('load', checkForMobile);
 console.log(updateUsernameField());
