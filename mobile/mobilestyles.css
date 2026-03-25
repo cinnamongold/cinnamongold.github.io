@@ -57,3 +57,11 @@ button {
     
     transition: box-shadow 0.3s, padding 0.3s, transform 0.3s, margin-bottom 0.3s;
 }
+
+.svg {
+    width: 1.5rem;
+    object-fit: contain;
+    display: block;
+
+    filter: drop-shadow( 2px 3px rgba(0, 0, 0, 0.178));
+}
