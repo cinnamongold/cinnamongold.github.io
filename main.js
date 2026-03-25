@@ -60,7 +60,7 @@ function checkForMobile() {
         window.location.href = "mobile";
         console.log("Screen too bebeh");
     } else if(isMobile === false && (currentWindowLocation == "/mobile/")) {
-        window.location.href = "/";
+        window.location.href = "../";
         console.log("Desktop detected, switching to correct site...")
     } else {
         console.log("No change in site needed.");
