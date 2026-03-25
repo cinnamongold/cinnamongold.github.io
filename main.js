@@ -3,6 +3,7 @@ console.log("BEWARE OF CONSOLE SPAM");
 
 // Init vars
 const currentWindowLocation = window.location.href;
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
 // Follow cursor script
 // Elements to move
@@ -55,15 +56,16 @@ function changeUsername() {
 
 // This function redirects mobile users to a cleaner UI for them
 function checkForMobile() {
-    if (window.matchMedia('(max-width: 768px)').matches && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
+    if (isMobile && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io")) {
         window.location.href = "mobile";
-        console.log("small screen detected! going to mobile site");
+        console.log("Screen too bebeh");
     } else {
-        console.log("nothing weird, loading default site");
+        console.log("cinnamongold.github.io - Desktop Front-end 2.0");
     }
 }
 
 // Init functions
 
 window.addEventListener('load', checkForMobile);
-console.log(updateUsernameField());
+console.log("username: ", updateUsernameField());
+console.log("Mobile Detected?: ", isMobile);
