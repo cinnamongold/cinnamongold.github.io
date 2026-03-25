@@ -2,7 +2,7 @@
 console.log("BEWARE OF CONSOLE SPAM");
 
 // Init vars
-const currentWindowLocation = window.location.href;
+const currentWindowLocation = window.location.pathname;
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
 // Follow cursor script
@@ -56,10 +56,11 @@ function changeUsername() {
 
 // This function redirects mobile users to a cleaner UI for them
 function checkForMobile() {
-    if (isMobile && (currentWindowLocation == "http://127.0.0.1:5500/" || currentWindowLocation == "https://cinnamongold.github.io/")) {
+    if (isMobile && (currentWindowLocation == "/")) {
         window.location.href = "mobile";
         console.log("Screen too bebeh");
-    } else if(isMobile === false && (currentWindowLocation == "http://127.0.0.1:5500/mobile" || currentWindowLocation == "https://cinnamongold.github.io/mobile/")) {
+    } else if(isMobile === false && (currentWindowLocation == "/mobile/")) {
+        window.location.href = "/";
         console.log("Desktop detected, switching to correct site...")
     } else {
         console.log("No change in site needed.");
